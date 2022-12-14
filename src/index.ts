@@ -1,5 +1,5 @@
 import './index.scss';
-import { five } from './components/hh';
+import { five } from './modules/hh';
 
-const hi: string = 'Hell world ';
+const hi = 'Hell world';
 console.log(hi + five);
