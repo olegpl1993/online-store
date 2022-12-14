@@ -1,6 +1,5 @@
-import './styles/index.scss';
-import five from './ts/hh';
-import img from './images/img';
+import './index.scss';
+import { five } from './components/hh';
 
-const hi = 'Hell world ';
+const hi: string = 'Hell world ';
 console.log(hi + five);
