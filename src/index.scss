@@ -1,2 +1,18 @@
 //сюда подключаются все модули стилей
-@use 'nullstyle';
+@use "nullstyle";
+
+.wrapper {
+  border: 3px solid red;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.hello {
+  border: 1px solid green;
+  font-size: 50px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
