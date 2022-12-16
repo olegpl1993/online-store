@@ -1,2 +1,28 @@
-//сюда подключаются все модули стилей
-@use 'nullstyle';
+@use "nullstyle"; // обнуление
+
+.wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.headerBox {
+  height: 50px;
+  background-color: rgb(175, 255, 190);
+  padding: 5px;
+}
+
+.contentBox {
+  height: 100%;
+  background-color: rgb(255, 253, 206);
+  padding: 5px;
+}
+
+.footerBox {
+  height: 50px;
+  background-color: rgb(240, 186, 255);
+  padding: 5px;
+}
