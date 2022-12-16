@@ -1,18 +1,28 @@
-//сюда подключаются все модули стилей
-@use "nullstyle";
+@use "nullstyle"; // обнуление
 
 .wrapper {
-  border: 3px solid red;
   position: relative;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
-.hello {
-  border: 1px solid green;
-  font-size: 50px;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.headerBox {
+  height: 50px;
+  background-color: rgb(175, 255, 190);
+  padding: 5px;
+}
+
+.contentBox {
+  height: 100%;
+  background-color: rgb(255, 253, 206);
+  padding: 5px;
+}
+
+.footerBox {
+  height: 50px;
+  background-color: rgb(240, 186, 255);
+  padding: 5px;
 }
