@@ -7,15 +7,15 @@ export function header(headerBox: HTMLElement) {
   const logo = createElement(header, 'div', 'logo', 'MyOnlineStore');
   const menu = createElement(header, 'div', 'menu');
   const linkMain = createElement(menu, 'a', 'link linkMain', 'Main Page');
-  const linkCard = createElement(menu, 'a', 'link linkCard', 'Card Page');
-  const link404 = createElement(menu, 'a', 'link link404', '404 Page');
+  const linkCart = createElement(menu, 'a', 'link linkCart', 'Cart Page');
+  const linkProduct = createElement(menu, 'a', 'link linkProduct', 'Product Page');
 
-  (linkMain as HTMLAnchorElement).href = '/';
-  (linkCard as HTMLAnchorElement).href = '/card';
-  (link404 as HTMLAnchorElement).href = '/404';
+  (linkMain as HTMLAnchorElement).href = '#';
+  (linkCart as HTMLAnchorElement).href = '#cart';
+  (linkProduct as HTMLAnchorElement).href = '#product';
 
   linkMain.addEventListener('click', (event) => route(event));
-  linkCard.addEventListener('click', (event) => route(event));
-  link404.addEventListener('click', (event) => route(event));
+  linkCart.addEventListener('click', (event) => route(event));
+  linkProduct.addEventListener('click', (event) => route(event));
   return header;
 }
