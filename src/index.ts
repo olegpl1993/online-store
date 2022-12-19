@@ -23,7 +23,7 @@ function router() {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
   if (hash === '') main(contentBox) // отрисовка выбраной страницы
   else if (hash === '#cart') cart(contentBox)
-  else if (hash === '#product') product(contentBox)
+  else if (hash === '#product') product(contentBox, 1)
   else error(contentBox)
 }
 
