@@ -35,6 +35,7 @@ export function product(contentBox: HTMLElement, id: number) {
   const productDealColumn = createElement(productDescriptionColum, 'div', 'productDealColumn');
   const productPrice = createElement(productDealColumn, 'div', 'productPrice', `Price: $${products[id - 1].price}`);
   const productAddToCart = createElement(productDealColumn, 'button', 'productAddToCart', `ADD TO CART`);
+  const productBuyNow = createElement(productDealColumn, 'button', 'productBuyNow', `BUY NOW`);
 
   return product;
 }
