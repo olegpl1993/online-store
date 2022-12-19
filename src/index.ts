@@ -24,7 +24,7 @@ function router() {
   const randomNumberItemProduct: number = Math.floor(Math.random() * 100); //рандомное число карточки для отрисовки
   if (hash === '') main(contentBox) // отрисовка выбраной страницы
   else if (hash === '#cart') cart(contentBox, randomNumberItemProduct)
-  else if (hash === '#product') product(contentBox, 1)
+  else if (hash === '#product') product(contentBox, randomNumberItemProduct)
   else error(contentBox)
 }
 
