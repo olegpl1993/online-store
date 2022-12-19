@@ -9,7 +9,7 @@
         "esModuleInterop": true,
         "noImplicitAny": true,
         "strict": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
     },
     "exclude": [
         "node_modules"

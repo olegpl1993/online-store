@@ -1,8 +1,9 @@
 import './product.scss'
 import { createElement } from '../createElement'
-import { products } from '../state'
+import data from '../../data/database.json'
 
 export function product(contentBox: HTMLElement, id: number) {
+  const products = data.products;
   const product = createElement(contentBox, 'div', 'product');
   console.log(products[id - 1]);
   const pathStr = `STORE >> ${products[id - 1].category} >> ${products[id - 1].brand} >> ${products[id - 1].title}`.toUpperCase();
