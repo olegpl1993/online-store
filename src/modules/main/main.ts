@@ -9,7 +9,7 @@ export function main(contentBox: HTMLElement) {
   const mainProductsColum = createElement(main, 'div', 'mainProductsColum');
 
 
-
+  
   // кнопки очистить фильтры и копировать ссылку ---------------------------------------
   const mainFilterBtnRow = createElement(mainFilterColum, 'div', 'mainFilterBtnRow');
   const mainFilterBtnResetFilters = createElement(mainFilterBtnRow, 'button', 'mainFilterBtnResetFilters', `Reset filters`);
