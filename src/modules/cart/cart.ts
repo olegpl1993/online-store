@@ -4,7 +4,7 @@ import dataBase from '../../data/database.json'
 
 export function cart(contentBox: HTMLElement,idProduct:number) {
   const productItem = dataBase.products[idProduct];
-  const cart = createElement(contentBox, 'h2', 'cart-title', 'Card Page')
+  const cart = createElement(contentBox, 'h2', 'cart-title')
   const cardWrap = createElement(contentBox,'div','card')
   cardWrap.innerHTML = `
   <div class="photo">
