@@ -1,6 +1,7 @@
 import './main.scss'
 import { createElement } from '../createElement'
 import { products } from '../state';
+import { cart } from '../cart/cart';
 
 export function main(contentBox: HTMLElement) {
   const main = createElement(contentBox, 'div', 'main');
@@ -8,8 +9,13 @@ export function main(contentBox: HTMLElement) {
   const mainFilterColum = createElement(main, 'div', 'mainFilterColum');
   const mainProductsColum = createElement(main, 'div', 'mainProductsColum');
 
+  // блок с карточками товаров ---------------------------------------------------------
+  const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
+  for (const product in products) {
+    console.log(+product)
+    cart(mainProductsCardBox, +product)
+  }
 
-  
   // кнопки очистить фильтры и копировать ссылку ---------------------------------------
   const mainFilterBtnRow = createElement(mainFilterColum, 'div', 'mainFilterBtnRow');
   const mainFilterBtnResetFilters = createElement(mainFilterBtnRow, 'button', 'mainFilterBtnResetFilters', `Reset filters`);
@@ -32,7 +38,6 @@ export function main(contentBox: HTMLElement) {
     </div>`
   }
   // -------------------------------------------------------------------------------------------
-
 
   return main;
 }
