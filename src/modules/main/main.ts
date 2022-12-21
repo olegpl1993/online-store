@@ -1,7 +1,7 @@
 import './main.scss'
 import { createElement } from '../createElement'
 import { products } from '../state';
-import { cart } from '../cart/cart';
+import { card } from '../card/card';
 
 export function main(contentBox: HTMLElement) {
   const main = createElement(contentBox, 'div', 'main');
@@ -13,7 +13,7 @@ export function main(contentBox: HTMLElement) {
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
   for (const product in products) {
     console.log(+product)
-    cart(mainProductsCardBox, +product)
+    card(mainProductsCardBox, +product)
   }
 
   // кнопки очистить фильтры и копировать ссылку ---------------------------------------

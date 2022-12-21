@@ -3,7 +3,7 @@ import { createElement } from './modules/createElement'
 import { header } from './modules/header/header'
 import { footer } from './modules/footer/footer'
 import { main } from './modules/main/main'
-import { cart } from './modules/cart/cart'
+import { card } from './modules/card/card'
 import { error } from './modules/error/error'
 import { product } from './modules/product/product'
 
@@ -23,7 +23,7 @@ function router() {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
   const randomNumberItemProduct: number = Math.floor(Math.random() * 100); //рандомное число карточки для отрисовки
   if (hash === '') main(contentBox) // отрисовка выбраной страницы
-  else if (hash === '#cart') cart(contentBox, randomNumberItemProduct)
+  else if (hash === '#cart') card(contentBox, randomNumberItemProduct)
   else if (hash === '#product') product(contentBox, randomNumberItemProduct)
   else error(contentBox)
 }

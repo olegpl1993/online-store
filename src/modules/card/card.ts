@@ -1,10 +1,10 @@
-import './cart.scss'
+import './card.scss'
 import { createElement } from '../createElement'
 import dataBase from '../../data/database.json'
 
-export function cart(contentBox: HTMLElement,idProduct:number) {
+export function card(contentBox: HTMLElement,idProduct:number) {
   const productItem = dataBase.products[idProduct];
-  const cart = createElement(contentBox, 'h2', 'cart-title')
+  const card = createElement(contentBox, 'h2', 'card-title')
   const cardWrap = createElement(contentBox,'div','card')
   cardWrap.innerHTML = `
   <div class="photo">
@@ -27,5 +27,5 @@ export function cart(contentBox: HTMLElement,idProduct:number) {
     <button class="description-button">Add to Cart</button>
   </div>
 `
-  return cart;
+  return card;
 }
