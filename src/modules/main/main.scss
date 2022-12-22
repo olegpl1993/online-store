@@ -18,27 +18,38 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid green;
+    gap: 10px;
 
     .mainFilterBtnResetFilters,
     .mainFilterBtnCopyLink {
+      width: 130px;
       border: 1px solid black;
       border-radius: 10px;
       padding: 10px;
-      font-size: 25px;
+      font-size: 20px;
       background-color: rgb(120, 255, 120);
     }
   }
 
   .mainFilterCategoryBox {
     border: 1px solid red;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     .mainFilterCategoryTitle {
       font-size: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid green;
+    }
+
+    .mainFilterCategoryList {
+      height: 200px;
+      overflow-y: scroll;
+      padding: 5px;
     }
 
     .mainFilterCategoryRow {
@@ -50,7 +61,6 @@
 }
 
 .mainProductsColum {
-  width: 90%;
   border: 1px solid green;
   padding: 10px;
 
