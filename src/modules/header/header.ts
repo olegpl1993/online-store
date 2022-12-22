@@ -4,10 +4,11 @@ import { route } from '../..'
 import { cartState } from '../state';
 
 export function header(headerBox: HTMLElement) {
+  while (headerBox.firstChild) headerBox.removeChild(headerBox.firstChild); // очищаем узел headerBox
+
   const header = createElement(headerBox, 'div', 'header');
   const logo = createElement(header, 'a', 'logo', 'Online Store');
   (logo as HTMLAnchorElement).href = '#';
-  const menu = createElement(header, 'div', 'menu');
 
   const total = createElement(header, 'div', 'total');
   const cartTotal = createElement(total, 'div', 'cartTotal', 'Cart total:');

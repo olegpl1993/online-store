@@ -7,10 +7,10 @@ import { error } from './modules/error/error'
 import { product } from './modules/product/product'
 import { cart } from './modules/cart/cart'
 
-const wrapper = createElement(document.body, 'div', 'wrapper');
-const headerBox = createElement(wrapper, 'div', 'headerBox');
-const contentBox = createElement(wrapper, 'div', 'contentBox');
-const footerBox = createElement(wrapper, 'div', 'footerBox');
+export const wrapper = createElement(document.body, 'div', 'wrapper');
+export const headerBox = createElement(wrapper, 'div', 'headerBox');
+export const contentBox = createElement(wrapper, 'div', 'contentBox');
+export const footerBox = createElement(wrapper, 'div', 'footerBox');
 
 export function route(event: Event) {
   event.preventDefault();
