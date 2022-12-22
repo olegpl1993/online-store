@@ -1,5 +1,4 @@
 .header {
-  border: 1px solid black;
   height: 100%;
   width: 100%;
   display: flex;
@@ -12,13 +11,7 @@
   font-size: 30px;
   color: red;
   text-shadow: 1px 1px 10px rgb(255, 0, 43);
-}
-
-.menu {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  cursor: pointer;
 }
 
 .link {
