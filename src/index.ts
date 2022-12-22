@@ -21,10 +21,10 @@ export function route(event: Event) {
 function router() {
   const hash = window.location.hash; //получает хеш из строки браузера
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
-  const randomNumberItemProduct: number = Math.floor(Math.random() * 100); //рандомное число карточки для отрисовки
-  if (hash === '') main(contentBox) // отрисовка выбраной страницы
-  else if (hash === '#cart') cart(contentBox)
-  else if (hash === '#product') product(contentBox, randomNumberItemProduct)
+  const chekPage = hash.split('/')[0]; // страницa на которую перйти
+  if (chekPage === '') main(contentBox) // отрисовка выбраной страницы
+  else if (chekPage === '#cart') cart(contentBox)
+  else if (chekPage === '#product') product(contentBox, +hash.split('/')[1])
   else error(contentBox)
 }
 

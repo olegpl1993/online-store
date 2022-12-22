@@ -12,7 +12,6 @@ export function main(contentBox: HTMLElement) {
   // блок с карточками товаров ---------------------------------------------------------
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
   for (const product in products) {
-    console.log(+product)
     card(mainProductsCardBox, +product)
   }
 

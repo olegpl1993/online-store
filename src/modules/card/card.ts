@@ -1,31 +1,34 @@
 import './card.scss'
 import { createElement } from '../createElement'
 import dataBase from '../../data/database.json'
+import { route } from '../..';
 
-export function card(contentBox: HTMLElement,idProduct:number) {
-  const productItem = dataBase.products[idProduct];
-  const card = createElement(contentBox, 'h2', 'card-title')
-  const cardWrap = createElement(contentBox,'div','card')
-  cardWrap.innerHTML = `
-  <div class="photo">
-    <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} width="220" height="220">
-    <div class="photo-album">
-      <ul>
-        <li><img src="${productItem.images[0]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-        <li><img src="${productItem.images[1]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-        <li><img src="${productItem.images[2]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-        <li><img src="${productItem.images[3]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-      </ul>
-    </div>
-  </div>
-  <div class="description">
-    <h3 class="description-title">${productItem.title}</h3>
-    <h5 class="description-category">${productItem.category}</h5>
-    <h5 class="description-brand">${productItem.brand}</h5>
-    <span class="description-price">$ ${productItem.price}</span>
-    <p class="description-text">${productItem.description}</p>
-    <button class="description-button">Add to Cart</button>
-  </div>
-`
+export function card(contentBox: HTMLElement, id: number) {
+  const productItem = dataBase.products[id];
+
+  const card = createElement(contentBox, 'div', 'card');
+  card.style.backgroundImage = `url('${productItem.thumbnail}')`;
+  card.style.backgroundRepeat = 'no-repeat';
+  card.style.backgroundSize = 'cover';
+
+  const cardWrapper = createElement(card, 'div', 'cardWrapper');
+  const cardTitle = createElement(cardWrapper, 'div', 'cardTitle', `${productItem.title}`);
+  const cardDescription = createElement(cardWrapper, 'div', 'cardTitle')
+  cardDescription.innerHTML += `
+  <div>Category: ${productItem.category}</div>
+  <div>Brand: ${productItem.brand}</div>
+  <div>Price: $${productItem.price}</div>
+  <div>Dicount: ${productItem.discountPercentage}%</div>
+  <div>Rating: ${productItem.rating}</div>
+  <div>Stock: ${productItem.stock}</div>
+  `;
+    const buttonRow = createElement(cardWrapper, 'div', 'buttonRow');
+    const details = createElement(buttonRow, 'a', 'details', 'DETAILS');
+    (details as HTMLAnchorElement).href = `#product/${productItem.id}`;
+    details.addEventListener('click', (event) => route(event));
+    
+    const addToCart = createElement(buttonRow, 'button', 'addToCart', 'ADD TO CART');
+    details.addEventListener('click', (event) => route(event));
+
   return card;
 }
