@@ -39,6 +39,7 @@ export function product(contentBox: HTMLElement, id: number) {
   const productPrice = createElement(productDealColumn, 'div', 'productPrice', `Price: $${productItem.price}`);
   const productAddToCart = createElement(productDealColumn, 'button', 'productAddToCart', `ADD TO CART`); */
   const cardWrap = createElement(contentBox,'div','card-item')
+  //TODO сделать цикл по имеющимся изображениям
   cardWrap.innerHTML = `
   <div class="photo">
     <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} width="220" height="220">

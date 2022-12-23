@@ -64,14 +64,34 @@ export function main(contentBox: HTMLElement) {
   const sortCardOption1  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↑');
   sortCardOption1.setAttribute('value','Price sort Ascending');
   const sortCardOption2  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↓');
-    sortCardOption1.setAttribute('value','Price Sort Descending');
+    sortCardOption2.setAttribute('value','Price Sort Descending');
   const sortCardOption3  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↑');
-    sortCardOption1.setAttribute('value','Rating Sort Ascending');
+    sortCardOption3.setAttribute('value','Rating Sort Ascending');
   const sortCardOption4  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↓');
-    sortCardOption1.setAttribute('value','Rating Sort Descending');
-
+    sortCardOption4.setAttribute('value','Rating Sort Descending');
   const foundCard = createElement(sortCardBox, 'div', 'sortCardSelect', `Found: ${state.length}`);
-  sortCardSelect.addEventListener('change', e => console.dir(e))
+  //TODO Разобраться с отрисовкой по event
+  sortCardSelect.addEventListener('change', e => {
+    const selectedTargetEvent = e.target as HTMLSelectElement;
+    const selectedTargetValue = selectedTargetEvent.value;
+    const selectedValueArray = selectedTargetValue.split(' ');
+    const selectedSortingValue = selectedValueArray[0];
+    const selectedSortingType = selectedValueArray[selectedValueArray.length - 1];
+    if (selectedSortingType === 'Descending') {
+      products.sort(SortDescendingByField(selectedSortingValue));
+      for (const product in products) {
+        card(mainProductsCardBox, +product);
+        console.log(1);
+      }
+    } else if(selectedSortingType === 'Ascending') {
+      products.sort(SortAscendingByField(selectedSortingValue));
+      for (const product in products) {
+        card(mainProductsCardBox, +product);
+        console.log(2);
+      }
+    }
+
+  })
   const searchCard = createElement(sortCardBox, 'input', 'searchCard');
   (searchCard as HTMLInputElement).type = 'search';
   (searchCard as HTMLInputElement).placeholder = 'Search product';
@@ -79,9 +99,16 @@ export function main(contentBox: HTMLElement) {
   // блок с карточками ----------------------------------------------------------------------
 
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
-  for (const product in products) {
+/*   for (const product in products) {
     card(mainProductsCardBox, +product);
-  }
+  } */
 
   return main;
+}
+//TODO Сделать DRY для этого кода
+function SortDescendingByField(fieldName:any) {
+  return (a:any, b:any) => a[fieldName.toLowerCase()] > b[fieldName.toLowerCase()] ? -1 : 1;
+}
+function SortAscendingByField(fieldName:any) {
+  return (a:any, b:any) => a[fieldName.toLowerCase()] > b[fieldName.toLowerCase()] ? 1 : -1;
 }
