@@ -62,12 +62,16 @@ export function main(contentBox: HTMLElement) {
 
   const sortCardSelect = createElement(sortCardBox, 'select', 'sortCardSelect');
   const sortCardOption1  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↑');
+  sortCardOption1.setAttribute('value','Price sort Ascending');
   const sortCardOption2  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↓');
+    sortCardOption1.setAttribute('value','Price Sort Descending');
   const sortCardOption3  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↑');
+    sortCardOption1.setAttribute('value','Rating Sort Ascending');
   const sortCardOption4  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↓');
+    sortCardOption1.setAttribute('value','Rating Sort Descending');
 
   const foundCard = createElement(sortCardBox, 'div', 'sortCardSelect', `Found: ${state.length}`);
-
+  sortCardSelect.addEventListener('change', e => console.dir(e))
   const searchCard = createElement(sortCardBox, 'input', 'searchCard');
   (searchCard as HTMLInputElement).type = 'search';
   (searchCard as HTMLInputElement).placeholder = 'Search product';
