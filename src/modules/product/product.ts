@@ -6,6 +6,7 @@ import { header } from '../header/header';
 import { headerBox } from '../..';
 
 export function product(contentBox: HTMLElement, id: number) {
+
   const productItem = products[id - 1];
 
   const pathStr = `STORE >> ${productItem.category} >> ${productItem.brand} >> ${productItem.title}`.toUpperCase();
