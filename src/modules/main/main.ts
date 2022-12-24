@@ -5,6 +5,7 @@ import { card } from '../card/card';
 import { state } from '../state';
 
 export function main(contentBox: HTMLElement) {
+
   const main = createElement(contentBox, 'div', 'main');
   const mainFilterColum = createElement(main, 'div', 'mainFilterColum');
   const mainProductsColum = createElement(main, 'div', 'mainProductsColum');
@@ -14,7 +15,7 @@ export function main(contentBox: HTMLElement) {
   const mainFilterBtnResetFilters = createElement(mainFilterBtnRow, 'button', 'mainFilterBtnResetFilters', `Reset filters`);
   const mainFilterBtnCopyLink = createElement(mainFilterBtnRow, 'button', 'mainFilterBtnCopyLink', `Copy link`);
 
-  // фильтр катигории --------------------------------------------------------------------------
+  // фильтр категории --------------------------------------------------------------------------
   const mainFilterCategoryBox = createElement(mainFilterColum, 'div', 'mainFilterCategoryBox');
   const mainFilterCategoryTitle = createElement(mainFilterCategoryBox, 'div', 'mainFilterCategoryTitle', `Category`);
   const mainFilterCategoryList = createElement(mainFilterCategoryBox, 'div', 'mainFilterCategoryList');
@@ -70,28 +71,20 @@ export function main(contentBox: HTMLElement) {
   const sortCardOption4  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↓');
     sortCardOption4.setAttribute('value','Rating Sort Descending');
   const foundCard = createElement(sortCardBox, 'div', 'sortCardSelect', `Found: ${state.length}`);
-  //TODO Разобраться с отрисовкой по event
-  sortCardSelect.addEventListener('change', e => {
-    const selectedTargetEvent = e.target as HTMLSelectElement;
-    const selectedTargetValue = selectedTargetEvent.value;
-    const selectedValueArray = selectedTargetValue.split(' ');
-    const selectedSortingValue = selectedValueArray[0];
-    const selectedSortingType = selectedValueArray[selectedValueArray.length - 1];
-    if (selectedSortingType === 'Descending') {
-      products.sort(SortDescendingByField(selectedSortingValue));
-      for (const product in products) {
-        card(mainProductsCardBox, +product);
-        console.log(1);
-      }
-    } else if(selectedSortingType === 'Ascending') {
-      products.sort(SortAscendingByField(selectedSortingValue));
-      for (const product in products) {
-        card(mainProductsCardBox, +product);
-        console.log(2);
-      }
-    }
 
+  sortCardSelect.addEventListener('change', e => { //слушатель события при изменение select
+    const selectedTargetEvent = e.target as HTMLSelectElement;
+    const selectedTargetValue = selectedTargetEvent.value; //значение поля option
+    const selectedValueArray = selectedTargetValue.split(' '); //разбитие на массив значения поля option, для дальнейшей фильтрации контента ['Rating', 'Sort', 'Descending']
+    const selectedSortingValue = selectedValueArray[0]; //значения поля для фильтрации
+    const selectedSortingType = selectedValueArray[selectedValueArray.length - 1]; //признак для фильтрации(убывание,возрастание)
+    state.sort(sortProductsByFieldAndType(selectedSortingType,selectedSortingValue))
+      for (const product in products) {
+        card(mainProductsCardBox, +product); //отрисовка карточек товара
+      }
+     foundCard.innerText= `Found: ${state.length}`; //обновление найденных элементов
   })
+
   const searchCard = createElement(sortCardBox, 'input', 'searchCard');
   (searchCard as HTMLInputElement).type = 'search';
   (searchCard as HTMLInputElement).placeholder = 'Search product';
@@ -99,16 +92,19 @@ export function main(contentBox: HTMLElement) {
   // блок с карточками ----------------------------------------------------------------------
 
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
-/*   for (const product in products) {
-    card(mainProductsCardBox, +product);
-  } */
+//TODO типизация any
+  function sortProductsByFieldAndType (sortType:string,sortFieldName:string){ //функция сортировки массива объектов по признаку(убывание,возрастание) и значению
+    mainProductsCardBox.innerHTML=``; //предварительная очистка всех карточек товара
+    if (sortType === 'Descending') {
+      return (a:any, b:any) => a[sortFieldName.toLowerCase()] > b[sortFieldName.toLowerCase()] ? -1 : 1;
+    } else if(sortType === 'Ascending') {
+      return (a:any, b:any) => a[sortFieldName.toLowerCase()] > b[sortFieldName.toLowerCase()] ? 1 : -1;
+    }
+  }
 
+  for (const product in products) {
+    card(mainProductsCardBox, +product);
+  }
   return main;
 }
-//TODO Сделать DRY для этого кода
-function SortDescendingByField(fieldName:any) {
-  return (a:any, b:any) => a[fieldName.toLowerCase()] > b[fieldName.toLowerCase()] ? -1 : 1;
-}
-function SortAscendingByField(fieldName:any) {
-  return (a:any, b:any) => a[fieldName.toLowerCase()] > b[fieldName.toLowerCase()] ? 1 : -1;
-}
+
