@@ -39,19 +39,15 @@ export function product(contentBox: HTMLElement, id: number) {
   const productDealColumn = createElement(productDescriptionColum, 'div', 'productDealColumn');
   const productPrice = createElement(productDealColumn, 'div', 'productPrice', `Price: $${productItem.price}`);
   const productAddToCart = createElement(productDealColumn, 'button', 'productAddToCart', `ADD TO CART`); */
+
   const cardWrap = createElement(contentBox,'div','card-item')
-  //TODO сделать цикл по имеющимся изображениям
   cardWrap.innerHTML = `
   <div class="photo">
-    <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} width="220" height="220">
-    <div class="photo-album">
-      <ul>
-        <li><img src="${productItem.images[0]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-        <li><img src="${productItem.images[1]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-        <li><img src="${productItem.images[2]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-        <li><img src="${productItem.images[3]}" alt="The image of ${productItem.title}" width="57" height="57" loading="lazy"></li>
-      </ul>
-    </div>
+  <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} width="220" height="220">
+  <div class="photo-album">
+  <ul class="photo-list">
+  </ul>
+  </div>
   </div>
   <div class="description">
     <h3 class="description-title">${productItem.title}</h3>
@@ -62,8 +58,21 @@ export function product(contentBox: HTMLElement, id: number) {
     <button class="description-button">Add to Cart</button>
     <button class="description-button">Buy now</button>
     <h5 class="description-discount">Discount percentage: ${productItem.discountPercentage}</h5>
-  </div>
-`
+    </div>
+    `
+    const photoList = document.querySelector('.photo-list');
+    if (photoList != null) { //если список изображений существует
+    productItem.images.forEach((val)=>{ //для каждого изображения
+        const photoListItem = createElement(photoList,'li',''); //создай элемент списка
+        const img = createElement(photoListItem,'img','') as HTMLImageElement; //создай изображение
+        img.alt = `The image of ${productItem.title}`;
+        img.src = val;
+        img.width = 57;
+        img.height = 57;
+        photoListItem.appendChild(img);
+    });
+  }
+
 const productAddToCart = document.querySelector('.description-button');
   productAddToCart?.addEventListener('click', () => {
     cartState.push(productItem); // добавляет товар в корзину

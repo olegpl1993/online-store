@@ -28,7 +28,6 @@
       height: auto;
     width: 100%;
     object-fit: contain;
-    aspect-ratio: 1;
     }
     .photo-album {
       padding: 5px;
@@ -49,6 +48,9 @@
         border: 1px solid #a6a6a6;
         border-radius: 3px;
         list-style: none;
+        img {
+        object-fit: fill;
+        }
       }
     }
   }
