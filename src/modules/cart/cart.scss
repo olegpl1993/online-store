@@ -109,5 +109,51 @@
     border: 1px solid red;
     height: 100%;
     padding: 10px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .summaryTopRow {
+      border: 1px solid blue;
+      padding: 10px;
+    }
+
+    .appliedCodes {
+      font-size: 20px;
+      border: 1px solid rgb(255, 230, 0);
+      background-color: rgb(255, 242, 121);
+      padding: 5px;
+    }
+
+    .symmaryInputPromo {
+      width: 90%;
+      border: 1px solid black;
+      font-size: 23px;
+      padding: 10px;
+    }
+
+    .symmaryPromoBtn {
+      font-size: 25px;
+      padding: 10px;
+      border: 1px solid green;
+      background-color: rgb(134, 255, 130);
+      border-radius: 10px;
+    }
+
+    .promoForTest {
+      font-size: 20px;
+      color: red;
+    }
+
+    .buyNow {
+      font-size: 25px;
+      padding: 10px;
+      border: 1px solid green;
+      background-color: rgb(255, 130, 130);
+      border-radius: 10px;
+    }
   }
 }

@@ -4,6 +4,8 @@ import { cartState } from '../state';
 import { products } from '../state';
 import { header } from '../header/header';
 import { headerBox } from '../..';
+import { arrActivPromoCods } from '../state';
+import { arrPromoCods } from '../state';
 
 
 export function cart(contentBox: HTMLElement) {
@@ -11,7 +13,7 @@ export function cart(contentBox: HTMLElement) {
 
   const cartBox = createElement(contentBox, 'div', 'cart');
   const productsBox = createElement(cartBox, 'div', 'productsBox');
-  const summaryBox = createElement(cartBox, 'div', 'summaryBox', 'summaryBox');
+  const summaryBox = createElement(cartBox, 'div', 'summaryBox');
 
   // блок продуктов -----------------------------------------------------------------------
   const productsTopRow = createElement(productsBox, 'div', 'productsTopRow');
@@ -50,7 +52,7 @@ export function cart(contentBox: HTMLElement) {
     const numberAddAwayRow = createElement(numberColum, 'div', 'numberAddAwayRow');
 
     const numberAddBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '+');
-    numberAddBtn.addEventListener('click', () => { 
+    numberAddBtn.addEventListener('click', () => {
       if (cartStateObj[id] < products[+id - 1].stock) cartState.push(products[+id - 1]);
       header(headerBox);
       cart(contentBox);
@@ -59,7 +61,7 @@ export function cart(contentBox: HTMLElement) {
     const numberOfProducts = createElement(numberAddAwayRow, 'div', 'numberOfProducts', `${cartStateObj[id]}`);
 
     const numberAwayBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '-');
-    numberAwayBtn.addEventListener('click', () => { 
+    numberAwayBtn.addEventListener('click', () => {
       cartState.splice(cartState.indexOf(products[+id - 1]), 1);
       header(headerBox);
       cart(contentBox);
@@ -68,9 +70,53 @@ export function cart(contentBox: HTMLElement) {
     const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${products[+id - 1].price * cartStateObj[id]}`);
   }
 
-
   // блок подсчета суммы ------------------------------------------------------------------
+  const summaryTopRow = createElement(summaryBox, 'div', 'summaryTopRow', 'Summary');
+  const summaryProducts = createElement(summaryBox, 'div', 'summaryProducts', `Products: ${cartState.length}`);
+  const totalSum = cartState.reduce((acc, val) => acc + val.price, 0); // сумма всех товаров в корзине
+  const summaryTotal = createElement(summaryBox, 'div', 'summaryTotal', `Total: $${totalSum}`);
 
+  const finalTotalSum = totalSum - (totalSum / 100 * 10 * arrActivPromoCods.length); // сумма с учетом промо кодов
+  
+  if (arrActivPromoCods.length > 0) { // если есть активированные промо коды
+    const summaryNewTotal = createElement(summaryBox, 'div', 'summaryTotal', `New total: $${finalTotalSum}`);
+    summaryTotal.style.textDecoration = 'line-through'; // перечеркивает сумму до скидки
+    arrActivPromoCods.forEach((code) => {
+      const appliedCodes = createElement(summaryBox, 'button', 'appliedCodes', `${code} -10% DROP`);
+      (appliedCodes as HTMLButtonElement).value = code;
+      appliedCodes.addEventListener('click', () => {
+        const delIndex = arrActivPromoCods.indexOf((appliedCodes as HTMLButtonElement).value);
+        arrActivPromoCods.splice(delIndex, 1); // удаляет промо код из массива
+        cart(contentBox);
+      })
+    });
+  }
 
+  // блок с вводом промо кода --------------------------------------------------------------------
+  const symmaryInputPromo = createElement(summaryBox, 'input', 'symmaryInputPromo');
+  const symmaryBtnBox = createElement(summaryBox, 'div', 'symmaryPromoCodeBox'); // ячейка для кнопки
+  (symmaryInputPromo as HTMLInputElement).type = 'text';
+  (symmaryInputPromo as HTMLInputElement).placeholder = 'Enter promo code';
+
+  symmaryInputPromo.addEventListener('input', () => {
+    const inputText = ((symmaryInputPromo as HTMLInputElement).value).toUpperCase();
+    if (arrPromoCods.includes(inputText) && !(arrActivPromoCods.includes(inputText))) {
+      const symmaryPromoRsBtn = createElement(symmaryBtnBox, 'button', 'symmaryPromoBtn', `${inputText} -10% ADD`); // появляется кнопка
+      symmaryPromoRsBtn.addEventListener('click', () => {
+        arrActivPromoCods.push(inputText);
+        cart(contentBox);
+      })
+    } else {
+      while (symmaryBtnBox.firstChild) symmaryBtnBox.removeChild(symmaryBtnBox.firstChild); // прячет кнопку
+    }
+  })
+  const promoForTest = createElement(summaryBox, 'div', 'promoForTest', `Promo for test: 'RS', 'EPM'`);
+
+  // блок покупки -----------------------------------------------------------------------------
+  const buyNow = createElement(summaryBox, 'button', 'buyNow', `BUY NOW`);
+  buyNow.addEventListener('click', () => {
+    alert(`Yoy pay: $${finalTotalSum}`)
+  })
+  // -----------------------------------------------------------------------------------------
   return cart;
 }
