@@ -7,9 +7,9 @@ import { products } from '../state';
 export function cart(contentBox: HTMLElement) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
-  const cart = createElement(contentBox, 'div', 'cart');
-  const productsBox = createElement(cart, 'div', 'productsBox');
-  const summaryBox = createElement(cart, 'div', 'summaryBox', 'summaryBox');
+  const cartBox = createElement(contentBox, 'div', 'cart');
+  const productsBox = createElement(cartBox, 'div', 'productsBox');
+  const summaryBox = createElement(cartBox, 'div', 'summaryBox', 'summaryBox');
 
   // блок продуктов -----------------------------------------------------------------------
   const productsTopRow = createElement(productsBox, 'div', 'productsTopRow');
@@ -25,9 +25,6 @@ export function cart(contentBox: HTMLElement) {
   // список товаров -------------------------------------------------------------------------
   const cartStateObj = cartState.map((product) => product.id) // { ID товара : количество товара }
     .reduce((acc: any, el: number) => { acc[el] = (acc[el] || 0) + 1; return acc }, {}); // TODO (типизировать ANY)
-  console.log(cartState)
-  console.log(cartStateObj)
-  console.log(products)
 
   const productsList = createElement(productsBox, 'div', 'productsList');
   let i = 1; // начальная строка товара
@@ -49,9 +46,23 @@ export function cart(contentBox: HTMLElement) {
     const numberColum = createElement(productRow, 'div', 'numberColum'); // колонка регулировки количества товара
     const numberProductStock = createElement(numberColum, 'div', 'numberProductStock', `Stock: ${products[+id - 1].stock}`);
     const numberAddAwayRow = createElement(numberColum, 'div', 'numberAddAwayRow');
+
     const numberAddBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '+');
+    numberAddBtn.addEventListener('click', () => { 
+      cartState.push(products[+id - 1]);
+      console.log(cartState);
+      cart(contentBox);
+    });
+
     const numberOfProducts = createElement(numberAddAwayRow, 'div', 'numberOfProducts', `${cartStateObj[id]}`);
+
     const numberAwayBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '-');
+    numberAwayBtn.addEventListener('click', () => { 
+      cartState.splice(cartState.indexOf(products[+id - 1]), 1);
+      console.log(cartState);
+      cart(contentBox);
+    });
+
     const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${products[+id - 1].price * cartStateObj[id]}`);
   }
 
