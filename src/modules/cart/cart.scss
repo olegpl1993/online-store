@@ -1,7 +1,159 @@
 .cart {
-  font-size: 50px;
-  color: red;
+  font-size: 25px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  border: 1px solid green;
+  padding: 10px;
+  gap: 10px;
+
+  .productsBox {
+    border: 1px solid red;
+    height: 100%;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .productsTopRow {
+      border: 1px solid blue;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+
+      .productsListOption {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .optionItemsInput {
+          border: 1px solid black;
+          font-size: 20px;
+          width: 43px;
+          height: 35px;
+          padding: 5px;
+        }
+      }
+    }
+
+    .productsList {
+      border: 1px solid violet;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 100%;
+      padding: 10px;
+
+      .productRow {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid green;
+
+        .productImg {
+          height: 140px;
+          width: 175px;
+          border-radius: 5px;
+        }
+
+        .productTitle {
+          font-size: 25px;
+        }
+
+        .descriptionColum {
+          width: 100%;
+          font-size: 20px;
+          border: 1px solid blueviolet;
+          padding: 5px;
+        }
+
+        .numberColum {
+          border: 1px solid black;
+          font-size: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 10px;
+          width: 220px;
+        }
+
+        .numberAddAwayRow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+
+          .numberBtn {
+            padding: 10px;
+            border: 1px solid green;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  .summaryBox {
+    border: 1px solid red;
+    height: 100%;
+    padding: 10px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .summaryTopRow {
+      border: 1px solid blue;
+      padding: 10px;
+    }
+
+    .appliedCodes {
+      font-size: 20px;
+      border: 1px solid rgb(255, 230, 0);
+      background-color: rgb(255, 242, 121);
+      padding: 5px;
+    }
+
+    .symmaryInputPromo {
+      width: 90%;
+      border: 1px solid black;
+      font-size: 23px;
+      padding: 10px;
+    }
+
+    .symmaryPromoBtn {
+      font-size: 25px;
+      padding: 10px;
+      border: 1px solid green;
+      background-color: rgb(134, 255, 130);
+      border-radius: 10px;
+    }
+
+    .promoForTest {
+      font-size: 20px;
+      color: red;
+    }
+
+    .buyNow {
+      font-size: 25px;
+      padding: 10px;
+      border: 1px solid green;
+      background-color: rgb(255, 130, 130);
+      border-radius: 10px;
+    }
+  }
 }
