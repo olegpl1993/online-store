@@ -2,6 +2,8 @@ import './cart.scss';
 import { createElement } from '../createElement';
 import { cartState } from '../state';
 import { products } from '../state';
+import { header } from '../header/header';
+import { headerBox } from '../..';
 
 
 export function cart(contentBox: HTMLElement) {
@@ -49,8 +51,8 @@ export function cart(contentBox: HTMLElement) {
 
     const numberAddBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '+');
     numberAddBtn.addEventListener('click', () => { 
-      cartState.push(products[+id - 1]);
-      console.log(cartState);
+      if (cartStateObj[id] < products[+id - 1].stock) cartState.push(products[+id - 1]);
+      header(headerBox);
       cart(contentBox);
     });
 
@@ -59,7 +61,7 @@ export function cart(contentBox: HTMLElement) {
     const numberAwayBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '-');
     numberAwayBtn.addEventListener('click', () => { 
       cartState.splice(cartState.indexOf(products[+id - 1]), 1);
-      console.log(cartState);
+      header(headerBox);
       cart(contentBox);
     });
 
