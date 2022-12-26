@@ -3,7 +3,8 @@ import { createElement } from '../createElement'
 import { card } from '../card/card';
 import { products } from './../state';
 import { state } from '../state';
-import * as functions from '../functions'
+// import * as functions from '../functions'
+import { sortState } from '../functions';
 
 export function main(contentBox: HTMLElement) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
@@ -64,28 +65,33 @@ export function main(contentBox: HTMLElement) {
   const sortCardBox = createElement(mainProductsColum, 'div', 'sortCardBox');
 
   const sortCardSelect = createElement(sortCardBox, 'select', 'sortCardSelect');
-  const sortCardOption0  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↑'); //по умолчанию при выборе первой опции событие не исполняется
+  const sortCardOption0 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↑'); //по умолчанию при выборе первой опции событие не исполняется
   (sortCardOption0 as HTMLSelectElement).disabled = true;
   (sortCardOption0 as HTMLSelectElement).hidden = true;
-  const sortCardOption1  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↑');
-  sortCardOption1.setAttribute('value','Price sort Ascending');
-  const sortCardOption2  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↓');
-    sortCardOption2.setAttribute('value','Price Sort Descending');
-  const sortCardOption3  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↑');
-    sortCardOption3.setAttribute('value','Rating Sort Ascending');
-  const sortCardOption4  = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↓');
-    sortCardOption4.setAttribute('value','Rating Sort Descending');
+  const sortCardOption1 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↑');
+  // sortCardOption1.setAttribute('value', 'Price sort Ascending');
+  sortCardOption1.setAttribute('value', 'priceup');
+  const sortCardOption2 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↓');
+  // sortCardOption2.setAttribute('value', 'Price Sort Descending');
+  sortCardOption2.setAttribute('value', 'pricedown');
+  const sortCardOption3 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↑');
+  // sortCardOption3.setAttribute('value', 'Rating Sort Ascending');
+  sortCardOption3.setAttribute('value', 'ratingup');
+  const sortCardOption4 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↓');
+  // sortCardOption4.setAttribute('value', 'Rating Sort Descending');
+  sortCardOption4.setAttribute('value', 'ratingdown');
   const foundCard = createElement(sortCardBox, 'div', 'sortCardSelect', `Found: ${state.length}`);
-//TODO при отрисовке страницы с фильтром обнуляется select
+  //TODO при отрисовке страницы с фильтром обнуляется select
   sortCardSelect.addEventListener('change', e => { //слушатель события при изменение select
-    const selectedTargetEvent = e.target as HTMLSelectElement;
-    const selectedTargetValue = selectedTargetEvent.value; //значение поля option
-    const selectedValueArray = selectedTargetValue.split(' '); //разбитие на массив значения поля option, для дальнейшей фильтрации контента ['Rating', 'Sort', 'Descending']
-    const selectedSortingValue = selectedValueArray[0]; //значения поля для фильтрации
-    const selectedSortingType = selectedValueArray[selectedValueArray.length - 1]; //признак для фильтрации(убывание,возрастание)
-    state.sort(functions.sortProductsByFieldAndType(selectedSortingType,selectedSortingValue))
-        main(contentBox); //отрисовка карточек товара
-     foundCard.innerText= `Found: ${state.length}`; //обновление найденных элементов
+    // const selectedTargetEvent = e.target as HTMLSelectElement;
+    // const selectedTargetValue = selectedTargetEvent.value; //значение поля option
+    // const selectedValueArray = selectedTargetValue.split(' '); //разбитие на массив значения поля option, для дальнейшей фильтрации контента ['Rating', 'Sort', 'Descending']
+    // const selectedSortingValue = selectedValueArray[0]; //значения поля для фильтрации
+    // const selectedSortingType = selectedValueArray[selectedValueArray.length - 1]; //признак для фильтрации(убывание,возрастание)
+    sortState((e.target as HTMLSelectElement).value);
+    // state.sort(functions.sortProductsByFieldAndType(selectedSortingType, selectedSortingValue))
+    main(contentBox); //отрисовка карточек товара
+    // foundCard.innerText= `Found: ${state.length}`; //обновление найденных элементов
   })
 
   const searchCard = createElement(sortCardBox, 'input', 'searchCard');
