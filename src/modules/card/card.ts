@@ -1,13 +1,13 @@
 import './card.scss'
 import { createElement } from '../createElement'
-import { products } from '../state';
+import { state } from '../state';
 import { route } from '../..';
 import { cartState } from '../state';
 import { header } from '../header/header';
 import { headerBox } from '../..';
 
 export function card(contentBox: HTMLElement, id: number) {
-  const productItem = products[id];
+  const productItem = state[id];
 
   const card = createElement(contentBox, 'div', 'card');
   card.style.backgroundImage = `url('${productItem.thumbnail}')`;
@@ -29,7 +29,6 @@ export function card(contentBox: HTMLElement, id: number) {
     const details = createElement(buttonRow, 'a', 'details', 'DETAILS');
     (details as HTMLAnchorElement).href = `#product/${productItem.id}`;
     details.addEventListener('click', (event) => route(event));
-    
     const addToCart = createElement(buttonRow, 'button', 'addToCart', 'ADD TO CART');
     addToCart.addEventListener('click', () => {
       cartState.push(productItem); // добавляет товар в корзину

@@ -61,7 +61,8 @@ export function product(contentBox: HTMLElement, id: number) {
     </div>
     `
     const photoList = document.querySelector('.photo-list');
-    if (photoList != null) { //если список изображений существует
+    const photoThumb = document.querySelector('.photo img');
+    if ((photoList != null) && (photoThumb !=null)) { //если список изображений и главный постер существуют
     productItem.images.forEach((val)=>{ //для каждого изображения
         const photoListItem = createElement(photoList,'li',''); //создай элемент списка
         const img = createElement(photoListItem,'img','') as HTMLImageElement; //создай изображение
@@ -70,6 +71,8 @@ export function product(contentBox: HTMLElement, id: number) {
         img.width = 57;
         img.height = 57;
         photoListItem.appendChild(img);
+        (img as HTMLImageElement).addEventListener('click',
+        event => (photoThumb as HTMLImageElement).src = ((event.target as HTMLImageElement).src));
     });
   }
 
@@ -78,7 +81,6 @@ const productAddToCart = document.querySelector('.description-button');
     cartState.push(productItem); // добавляет товар в корзину
     header(headerBox); // повторная отрисовка хедера
   });
-
 
   return product;
 }
