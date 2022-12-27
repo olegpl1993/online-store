@@ -81,7 +81,6 @@ export function main(contentBox: HTMLElement) {
   sortCardOption4.setAttribute('value', 'ratingdown');
   sortCardSelect.addEventListener('change', e => { // слушатель события при изменение select
     window.history.pushState({}, "", `#?sort=${(e.target as HTMLSelectElement).value}`); // добавляет query sort в URL
-    sortState((e.target as HTMLSelectElement).value); // сортировка
     main(contentBox); // отрисовка карточек товара
   })
   if (queryObj.sort) (sortCardSelect as HTMLSelectElement).value = queryObj.sort; // делает активным выбранную сортировку
