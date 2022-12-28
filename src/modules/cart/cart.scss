@@ -31,7 +31,7 @@
         .optionItemsInput {
           border: 1px solid black;
           font-size: 20px;
-          width: 43px;
+          width: 60px;
           height: 35px;
           padding: 5px;
         }
@@ -54,6 +54,11 @@
         padding: 10px;
         border: 1px solid green;
 
+        .productImgBox {
+          height: 140px;
+          width: 175px;
+        }
+        
         .productImg {
           height: 140px;
           width: 175px;
