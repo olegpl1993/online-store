@@ -12,7 +12,7 @@ export function cart(contentBox: HTMLElement) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
   const cartStateObj = cartState.map((product) => product.id) // { ID товара : количество товара }
-    .reduce((acc: any, el: number) => { acc[el] = (acc[el] || 0) + 1; return acc }, {}); // TODO (типизировать ANY)
+    .reduce((acc: Record<number, number>, el: number) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
   cartPages.limitPages = Math.ceil(Object.keys(cartStateObj).length / cartPages.limitPrductsOnPage);
 
@@ -80,18 +80,18 @@ export function cart(contentBox: HTMLElement) {
 
       const numberAddBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '+');
       numberAddBtn.addEventListener('click', () => {
-        if (cartStateObj[id] < products[+id - 1].stock) cartState.push(products[+id - 1]);
+        if (cartStateObj[+id] < products[+id - 1].stock) cartState.push(products[+id - 1]);
         header(headerBox);
         cart(contentBox);
       })
-      const numberOfProducts = createElement(numberAddAwayRow, 'div', 'numberOfProducts', `${cartStateObj[id]}`);
+      const numberOfProducts = createElement(numberAddAwayRow, 'div', 'numberOfProducts', `${cartStateObj[+id]}`);
       const numberAwayBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '-');
       numberAwayBtn.addEventListener('click', () => {
         cartState.splice(cartState.indexOf(products[+id - 1]), 1);
         header(headerBox);
         cart(contentBox);
       })
-      const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${products[+id - 1].price * cartStateObj[id]}`);
+      const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${products[+id - 1].price * cartStateObj[+id]}`);
     }
     i++;
   }
