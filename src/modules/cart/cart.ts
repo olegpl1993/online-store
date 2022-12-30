@@ -7,8 +7,9 @@ import { headerBox } from '../..';
 import { arrActivPromoCods } from '../state';
 import { arrPromoCods } from '../state';
 import { cartPages } from '../state';
+import { buyNow } from '../buyNow/buyNow';
 
-export function cart(contentBox: HTMLElement) {
+export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
   const cartStateObj = cartState.map((product) => product.id) // { ID товара : количество товара }
@@ -16,10 +17,21 @@ export function cart(contentBox: HTMLElement) {
 
   cartPages.limitPages = Math.ceil(Object.keys(cartStateObj).length / cartPages.limitPrductsOnPage);
 
+  if (Object.keys(cartStateObj).length === 0) { // если корзина пустая
+    const cartBox = createElement(contentBox, 'div', 'cart', 'Cart is Empty');
+    return cartBox;
+  }
 
   const cartBox = createElement(contentBox, 'div', 'cart');
   const productsBox = createElement(cartBox, 'div', 'productsBox');
   const summaryBox = createElement(cartBox, 'div', 'summaryBox');
+
+  // модальное окно покупки --------------------------------------------------------------
+  if (buyNowDraw === true) {
+    const buyNowBox = createElement(cartBox, 'div', 'buyNowBox'); //обертка (черный фон)
+    buyNow(buyNowBox);
+    buyNowBox.addEventListener('click', () => cart(contentBox)); //закрытие модального окна при нажатии по обертке
+  }
 
   // блок продуктов -----------------------------------------------------------------------
   const productsTopRow = createElement(productsBox, 'div', 'productsTopRow');
@@ -92,6 +104,11 @@ export function cart(contentBox: HTMLElement) {
         cart(contentBox);
       })
       const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${products[+id - 1].price * cartStateObj[+id]}`);
+    } else {
+      if (cartPages.curentPage > cartPages.limitPages) {
+        cartPages.curentPage = cartPages.limitPages;
+        cart(contentBox);
+      }
     }
     i++;
   }
@@ -139,9 +156,9 @@ export function cart(contentBox: HTMLElement) {
   const promoForTest = createElement(summaryBox, 'div', 'promoForTest', `Promo for test: 'RS', 'EPM'`);
 
   // блок покупки -----------------------------------------------------------------------------
-  const buyNow = createElement(summaryBox, 'button', 'buyNow', `BUY NOW`);
-  buyNow.addEventListener('click', () => {
-    alert(`Yoy pay: $${finalTotalSum}`)
+  const buyNowBtn = createElement(summaryBox, 'button', 'buyNowBtn', `BUY NOW`);
+  buyNowBtn.addEventListener('click', () => {
+    cart(contentBox, true);
   })
   // -----------------------------------------------------------------------------------------
   return cart;

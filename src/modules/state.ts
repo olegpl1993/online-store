@@ -1,11 +1,12 @@
 import data from '../data/database.json'
 import { Product } from '../types/types';
+import { loadCartStateFromLS } from './saveLS';
 
 export const products = data.products; // получаем массив продуктов до сортировки
 
 export const state = [...products]; // отсортированный массив (текущее состояние)
 
-export const cartState: Product[] = []; // массив продуктов в корзине
+export const cartState: Product[] = loadCartStateFromLS(); // загружает массив продуктов из LS или создает пустой []
 
 export const arrPromoCods = ['RS', 'EPM']; // доступные для ввода промо коды
 
