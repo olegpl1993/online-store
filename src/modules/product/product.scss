@@ -1,9 +1,10 @@
 .product {
   text-align: center;
   font-size: 1.6rem;
+  padding: 10px;
 }
 
- .card-item {
+.card-item {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -16,8 +17,7 @@
   transition: all 0.3s;
 
   &:hover {
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   .photo {
@@ -26,8 +26,8 @@
     box-shadow: 4px 4px 25px -2px rgb(0 0 0 / 30%);
     img {
       height: auto;
-    width: 100%;
-    object-fit: contain;
+      width: 100%;
+      object-fit: contain;
     }
     .photo-album {
       padding: 5px;
@@ -48,10 +48,13 @@
         border: 1px solid #a6a6a6;
         border-radius: 3px;
         list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         img {
-        object-fit: fill;
-        max-height: 57px;
-        cursor: pointer;
+          object-fit: fill;
+          max-height: 57px;
+          cursor: pointer;
         }
       }
     }
@@ -77,20 +80,21 @@
       text-align: center;
     }
 
-    .description-price,.description-discount {
+    .description-price,
+    .description-discount {
       margin: 0;
       color: #727272;
       font-weight: 500;
       font-size: 2rem;
       text-align: right;
       &::after {
-        content: '$';
+        content: "$";
       }
     }
     .description-discount {
       font-size: 1.3rem;
       &::after {
-        content: '%';
+        content: "%";
       }
     }
     .description-brand {

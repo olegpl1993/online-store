@@ -7,6 +7,19 @@
   padding: 10px;
   gap: 10px;
 
+  .buyNowBox {
+    position: fixed;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .productsBox {
     border: 1px solid red;
     height: 100%;
@@ -153,7 +166,7 @@
       color: red;
     }
 
-    .buyNow {
+    .buyNowBtn {
       font-size: 25px;
       padding: 10px;
       border: 1px solid green;
