@@ -16,6 +16,10 @@ export function cart(contentBox: HTMLElement) {
 
   cartPages.limitPages = Math.ceil(Object.keys(cartStateObj).length / cartPages.limitPrductsOnPage);
 
+  if (Object.keys(cartStateObj).length === 0) { // если корзина пустая
+    const cartBox = createElement(contentBox, 'div', 'cart', 'Cart is Empty');
+    return cartBox;
+  }
 
   const cartBox = createElement(contentBox, 'div', 'cart');
   const productsBox = createElement(cartBox, 'div', 'productsBox');
@@ -92,6 +96,11 @@ export function cart(contentBox: HTMLElement) {
         cart(contentBox);
       })
       const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${products[+id - 1].price * cartStateObj[+id]}`);
+    } else {
+      if (cartPages.curentPage > cartPages.limitPages) {
+        cartPages.curentPage = cartPages.limitPages;
+        cart(contentBox);
+      }
     }
     i++;
   }
