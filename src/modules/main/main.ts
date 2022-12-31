@@ -27,8 +27,8 @@ export function main(contentBox: HTMLElement) {
   const mainFilterCategoryTitle = createElement(mainFilterCategoryBox, 'div', 'mainFilterCategoryTitle', `Category`);
   const mainFilterCategoryList = createElement(mainFilterCategoryBox, 'div', 'mainFilterCategoryList');
 
-  const categoryListObj = products.map((product) => product.category) // обьект с категориями и количеством товара
-    .reduce((acc: any, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {}); // TODO (типизировать ANY)
+  const categoryListObj = products.map((product) => product.category) // { категория : количество товара }
+    .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
   for (const key in categoryListObj) {
     const categoryRow = createElement(mainFilterCategoryList, 'div', 'categoryRow');
@@ -43,8 +43,8 @@ export function main(contentBox: HTMLElement) {
   const brandTitle = createElement(mainFilterBrandBox, 'div', 'brandTitle', `Brand`);
   const brandList = createElement(mainFilterBrandBox, 'div', 'brandList');
 
-  const brandListObj = products.map((product) => product.brand) // обьект с категориями и количеством товара
-    .reduce((acc: any, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {}); // TODO (типизировать ANY)
+  const brandListObj = products.map((product) => product.brand) // { бренд : количество товара }
+    .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
   for (const key in brandListObj) {
     const brandRow = createElement(brandList, 'div', 'brandRow');
