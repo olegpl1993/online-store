@@ -31,12 +31,11 @@ export function main(contentBox: HTMLElement) {
     .reduce((acc: any, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {}); // TODO (типизировать ANY)
 
   for (const key in categoryListObj) {
-    mainFilterCategoryList.innerHTML += `
-    <div class="categoryRow">
-      <input type="checkbox">
-      <div class="categoryName">${key}</div>
-      <div class="categoryCount">${categoryListObj[key]}</div>
-    </div>`
+    const categoryRow = createElement(mainFilterCategoryList, 'div', 'categoryRow');
+    const categoryCheckbox = createElement(categoryRow, 'input', 'categoryCheckbox');
+    (categoryCheckbox as HTMLInputElement).type = 'checkbox';
+    const categoryName = createElement(categoryRow, 'div', 'categoryName', `${key}`);
+    const categoryCount = createElement(categoryRow, 'div', 'categoryCount', `${categoryListObj[key]}`);
   }
 
   // фильтр бренд -------------------------------------------------------------------------------
@@ -48,12 +47,11 @@ export function main(contentBox: HTMLElement) {
     .reduce((acc: any, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {}); // TODO (типизировать ANY)
 
   for (const key in brandListObj) {
-    brandList.innerHTML += `
-      <div class="brandRow">
-        <input type="checkbox">
-        <div class="brandName">${key}</div>
-        <div class="brandCount">${brandListObj[key]}</div>
-      </div>`
+    const brandRow = createElement(brandList, 'div', 'brandRow');
+    const brandCheckbox = createElement(brandRow, 'input', 'categoryCheckbox');
+    (brandCheckbox as HTMLInputElement).type = 'checkbox';
+    const brandName = createElement(brandRow, 'div', 'brandName', `${key}`);
+    const brandCount = createElement(brandRow, 'div', 'brandCount', `${brandListObj[key]}`);
   }
 
   // фильтр цена -----------------------------------------------------------------------------
