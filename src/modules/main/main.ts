@@ -35,7 +35,7 @@ export function main(contentBox: HTMLElement) {
   const categoryListObj = products.map((product) => product.category) // { категория : количество товара }
     .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
-    const stateCategoryListObj = state.map((product) => product.category) // { категория : количество товара }
+  const stateCategoryListObj = state.map((product) => product.category) // { категория : количество товара }
     .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
   for (const key in categoryListObj) {
@@ -64,12 +64,25 @@ export function main(contentBox: HTMLElement) {
   const brandListObj = products.map((product) => product.brand) // { бренд : количество товара }
     .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
+  const stateBrandListObj = state.map((product) => product.brand) // { бренд : количество товара }
+    .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
+
   for (const key in brandListObj) {
     const brandRow = createElement(brandList, 'div', 'brandRow');
     const brandCheckbox = createElement(brandRow, 'input', 'categoryCheckbox');
     (brandCheckbox as HTMLInputElement).type = 'checkbox';
+    (brandCheckbox as HTMLInputElement).value = key;
+    if (queryObj.brand.includes((brandCheckbox as HTMLInputElement).value)) {
+      (brandCheckbox as HTMLInputElement).checked = true; // делает активным выбранную фильтрацию
+    }
     const brandName = createElement(brandRow, 'div', 'brandName', `${key}`);
-    const brandCount = createElement(brandRow, 'div', 'brandCount', `${brandListObj[key]}`);
+    const brandCount = createElement(brandRow, 'div', 'brandCount', `${stateBrandListObj[key] || 0}/${brandListObj[key]}`);
+
+    (brandCheckbox as HTMLInputElement).addEventListener('change', e => { // слушатель события при изменение select
+      if (!(e.target as HTMLInputElement).checked) delFromUrl('brand', (e.target as HTMLSelectElement).value); // удаляет query из url
+      else addToUrl('brand', (e.target as HTMLSelectElement).value); // добавляет query в URL
+      main(contentBox);
+    })
   }
 
   // фильтр цена -----------------------------------------------------------------------------
