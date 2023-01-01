@@ -26,6 +26,14 @@ export function main(contentBox: HTMLElement) {
     main(contentBox);
   })
   const copyLink = createElement(filterBtnRow, 'button', 'mainFilterBtnCopyLink', `Copy link`);
+  copyLink.addEventListener('click', () => { // копирует URL
+    const tempInput = document.createElement('textarea');
+		tempInput.value = window.location.href;
+		(copyLink as HTMLButtonElement).parentNode?.appendChild(tempInput);
+		tempInput.select();
+		document.execCommand('copy');
+		(tempInput as HTMLTextAreaElement).parentNode?.removeChild(tempInput);
+  })
 
   // фильтр категории --------------------------------------------------------------------------
   const mainFilterCategoryBox = createElement(mainFilterColum, 'div', 'mainFilterCategoryBox');
