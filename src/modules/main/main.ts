@@ -68,8 +68,18 @@ export function main(contentBox: HTMLElement) {
     const brandRow = createElement(brandList, 'div', 'brandRow');
     const brandCheckbox = createElement(brandRow, 'input', 'categoryCheckbox');
     (brandCheckbox as HTMLInputElement).type = 'checkbox';
+    (brandCheckbox as HTMLInputElement).value = key;
+    if (queryObj.brand.includes((brandCheckbox as HTMLInputElement).value)) {
+      (brandCheckbox as HTMLInputElement).checked = true; // делает активным выбранную фильтрацию
+    }
     const brandName = createElement(brandRow, 'div', 'brandName', `${key}`);
     const brandCount = createElement(brandRow, 'div', 'brandCount', `${brandListObj[key]}`);
+
+    (brandCheckbox as HTMLInputElement).addEventListener('change', e => { // слушатель события при изменение select
+      if (!(e.target as HTMLInputElement).checked) delFromUrl('brand', (e.target as HTMLSelectElement).value); // удаляет query из url
+      else addToUrl('brand', (e.target as HTMLSelectElement).value); // добавляет query в URL
+      main(contentBox);
+    })
   }
 
   // фильтр цена -----------------------------------------------------------------------------

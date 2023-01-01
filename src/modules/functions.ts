@@ -35,7 +35,7 @@ export function createState() {
 export function parseSearch() {
   const hash = window.location.hash; // получает хеш из строки браузера
   const queryString = hash.split('?')[1]; // отделяет поиск от хеша
-  const arrOfQuery = queryString ? queryString.split('&') : [];
+  const arrOfQuery = queryString ? decodeURI(queryString).split('&') : [];
   const finalQueryObj: Record<string, string[]> = {
     sort: [],
     category: [],
@@ -69,6 +69,7 @@ export function addToUrl(name: string, parametr: string) {
   const queryObj = parseSearch(); // получение query параметров
   if (name === 'sort') queryObj.sort = [parametr]; // добавление в обьект нового параметра
   if (name === 'category' && (!(queryObj.category.includes(parametr)))) queryObj.category.push(parametr);
+  if (name === 'brand' && (!(queryObj.brand.includes(parametr)))) queryObj.brand.push(parametr);
   createUrl(queryObj);
 }
 
@@ -76,6 +77,7 @@ export function addToUrl(name: string, parametr: string) {
 export function delFromUrl(name: string, parametr: string) {
   const queryObj = parseSearch(); // получение query параметров
   if (name === 'category' && queryObj.category.includes(parametr)) queryObj.category.splice(queryObj.category.indexOf(parametr), 1);
+  if (name === 'brand' && queryObj.brand.includes(parametr)) queryObj.brand.splice(queryObj.brand.indexOf(parametr), 1);
   createUrl(queryObj);
 }
 
