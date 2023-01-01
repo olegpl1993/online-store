@@ -35,6 +35,9 @@ export function main(contentBox: HTMLElement) {
   const categoryListObj = products.map((product) => product.category) // { категория : количество товара }
     .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
+    const stateCategoryListObj = state.map((product) => product.category) // { категория : количество товара }
+    .reduce((acc: Record<string, number>, el: string) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
+
   for (const key in categoryListObj) {
     const categoryRow = createElement(mainFilterCategoryList, 'div', 'categoryRow');
     const categoryCheckbox = createElement(categoryRow, 'input', 'categoryCheckbox');
@@ -44,7 +47,7 @@ export function main(contentBox: HTMLElement) {
       (categoryCheckbox as HTMLInputElement).checked = true; // делает активным выбранную фильтрацию
     }
     const categoryName = createElement(categoryRow, 'div', 'categoryName', `${key}`);
-    const categoryCount = createElement(categoryRow, 'div', 'categoryCount', `${categoryListObj[key]}`);
+    const categoryCount = createElement(categoryRow, 'div', 'categoryCount', `${stateCategoryListObj[key] || 0}/${categoryListObj[key]}`);
 
     (categoryCheckbox as HTMLInputElement).addEventListener('change', e => { // слушатель события при изменение select
       if (!(e.target as HTMLInputElement).checked) delFromUrl('category', (e.target as HTMLSelectElement).value); // удаляет query из url
