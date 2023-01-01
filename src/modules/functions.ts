@@ -11,7 +11,7 @@ export function sortState(sortType: string, finalState: Product[]) {
 }
 
 // фильтрует state --------------------------------------------------------------------------
-export function filterState(tempLocalState: Product[]) {
+function filterCategory(tempLocalState: Product[]) {
   const queryObj = parseSearch(); // получение query параметров
   let newLocalState: Product[] = [];
   for (const el of queryObj.category) {
@@ -21,15 +21,25 @@ export function filterState(tempLocalState: Product[]) {
   return newLocalState;
 }
 
+function filterBrand(tempLocalState: Product[]) {
+  const queryObj = parseSearch(); // получение query параметров
+  let newLocalState: Product[] = [];
+  for (const el of queryObj.brand) {
+    const tempState = tempLocalState.filter(prod => prod.brand === el);
+    newLocalState = [...newLocalState, ...tempState]; // заполняем пустой массив подходящими по сортировке продуктами
+  }
+  return newLocalState;
+}
+
 // обработка state ---------------------------------------------------------------------------
 export function createState() {
   const queryObj = parseSearch(); // получение query параметров
   let tempState: Product[] = [...products];
-  if (queryObj.category.length > 0) tempState = filterState(tempState); // фильтррация state по категории
+  if (queryObj.category.length > 0) tempState = filterCategory(tempState); // фильтррация state по категории
+  if (queryObj.brand.length > 0) tempState = filterBrand(tempState); // фильтррация state по бренду
   if (queryObj.sort.length > 0) tempState = sortState(queryObj.sort[0], tempState); // сортировка state
   return [...tempState];
 }
-
 
 // разделяет url строку в обьект { фильтр: [параметры фильтрации] } ---------------------------
 export function parseSearch() {
