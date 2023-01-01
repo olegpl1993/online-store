@@ -28,11 +28,11 @@ export function main(contentBox: HTMLElement) {
   const copyLink = createElement(filterBtnRow, 'button', 'mainFilterBtnCopyLink', `Copy link`);
   copyLink.addEventListener('click', () => { // копирует URL
     const tempInput = document.createElement('textarea');
-		tempInput.value = window.location.href;
-		(copyLink as HTMLButtonElement).parentNode?.appendChild(tempInput);
-		tempInput.select();
-		document.execCommand('copy');
-		(tempInput as HTMLTextAreaElement).parentNode?.removeChild(tempInput);
+    tempInput.value = window.location.href;
+    (copyLink as HTMLButtonElement).parentNode?.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    (tempInput as HTMLTextAreaElement).parentNode?.removeChild(tempInput);
   })
 
   // фильтр категории --------------------------------------------------------------------------
@@ -117,7 +117,7 @@ export function main(contentBox: HTMLElement) {
   const sortCardOption4 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↓');
   sortCardOption4.setAttribute('value', 'ratingdown');
   sortCardSelect.addEventListener('change', e => { // слушатель события при изменение select
-    addToUrl('sort', (e.target as HTMLSelectElement).value); // добавляет query category в URL
+    addToUrl('sort', (e.target as HTMLSelectElement).value); // добавляет query в URL
     main(contentBox); // отрисовка карточек товара
   })
   if (queryObj.sort.length > 0) (sortCardSelect as HTMLSelectElement).value = queryObj.sort[0]; // делает активным выбранную сортировку
@@ -127,6 +127,14 @@ export function main(contentBox: HTMLElement) {
   const searchCard = createElement(sortCardBox, 'input', 'searchCard');
   (searchCard as HTMLInputElement).type = 'search';
   (searchCard as HTMLInputElement).placeholder = 'Search product';
+  searchCard.addEventListener('input', e => { // слушатель события при вводе текста
+    addToUrl('search', (e.target as HTMLSelectElement).value); // добавляет query в URL
+    main(contentBox); // отрисовка карточек товара
+  })
+  if (queryObj.search.length > 0) { // если строка поиска не пустая
+    (searchCard as HTMLInputElement).value = queryObj.search[0]; // заполняет строку
+    (searchCard as HTMLInputElement).focus(); // ставит курсор
+  }
 
   // блок с карточками ----------------------------------------------------------------------
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
