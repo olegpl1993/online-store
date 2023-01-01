@@ -1,7 +1,18 @@
 import { Product } from "../types/types";
 import { products } from "./state";
 
-// сортирует state -------------------------------------------------------------------------
+// обработка state -----------------------------------------------------------------------------------------------------
+export function createState() {
+  const queryObj = parseSearch(); // получение query параметров
+  let tempState: Product[] = [...products];
+  if (queryObj.category[0]) tempState = filterCategory(tempState); // фильтррация state по категории
+  if (queryObj.brand[0]) tempState = filterBrand(tempState); // фильтррация state по бренду
+  if (queryObj.sort[0]) tempState = sortState(queryObj.sort[0], tempState); // сортировка state
+  if (queryObj.search[0]) tempState = searchTitle(tempState); // сортировка state
+  return [...tempState];
+}
+
+// сортирует state 
 export function sortState(sortType: string, finalState: Product[]) {
   if (sortType === 'priceup') finalState.sort((a: Product, b: Product) => a.price - b.price);
   if (sortType === 'pricedown') finalState.sort((a: Product, b: Product) => b.price - a.price);
@@ -10,7 +21,7 @@ export function sortState(sortType: string, finalState: Product[]) {
   return finalState;
 }
 
-// фильтрует state --------------------------------------------------------------------------
+// фильтрует state 
 function filterCategory(tempLocalState: Product[]) {
   const queryObj = parseSearch(); // получение query параметров
   let newLocalState: Product[] = [];
@@ -31,15 +42,12 @@ function filterBrand(tempLocalState: Product[]) {
   return newLocalState;
 }
 
-// обработка state ---------------------------------------------------------------------------
-export function createState() {
+function searchTitle(tempLocalState: Product[]) {
   const queryObj = parseSearch(); // получение query параметров
-  let tempState: Product[] = [...products];
-  if (queryObj.category.length > 0) tempState = filterCategory(tempState); // фильтррация state по категории
-  if (queryObj.brand.length > 0) tempState = filterBrand(tempState); // фильтррация state по бренду
-  if (queryObj.sort.length > 0) tempState = sortState(queryObj.sort[0], tempState); // сортировка state
-  return [...tempState];
+  const tempState = tempLocalState.filter(prod => (prod.title.toLocaleLowerCase()).includes(queryObj.search[0].toLowerCase()));
+  return tempState;
 }
+// ----------------------------------------------------------------------------------------------------------------------
 
 // разделяет url строку в обьект { фильтр: [параметры фильтрации] } ---------------------------
 export function parseSearch() {
@@ -48,6 +56,7 @@ export function parseSearch() {
   const arrOfQuery = queryString ? decodeURI(queryString).split('&') : [];
   const finalQueryObj: Record<string, string[]> = {
     sort: [],
+    search: [],
     category: [],
     brand: [],
     price: [],
@@ -66,7 +75,7 @@ export function parseSearch() {
 function createUrl(queryObj: Record<string, string[]>) {
   let queryString = '#?'; // строка квери запроса
   for (const key in queryObj) {
-    if (queryObj[key].length >= 1) { // проверка что массив не пустой
+    if (queryObj[key][0]) { // проверка что массив не пустой
       if (queryString.length > 2) queryString += `&`; // если в строке уже есть фильтр добаление разделителя 
       queryString += `${key}=${queryObj[key]}`; // добаление основного селектора
     }
@@ -80,6 +89,7 @@ export function addToUrl(name: string, parametr: string) {
   if (name === 'sort') queryObj.sort = [parametr]; // добавление в обьект нового параметра
   if (name === 'category' && (!(queryObj.category.includes(parametr)))) queryObj.category.push(parametr);
   if (name === 'brand' && (!(queryObj.brand.includes(parametr)))) queryObj.brand.push(parametr);
+  if (name === 'search') queryObj.search = [encodeURI(parametr)];
   createUrl(queryObj);
 }
 
@@ -90,4 +100,3 @@ export function delFromUrl(name: string, parametr: string) {
   if (name === 'brand' && queryObj.brand.includes(parametr)) queryObj.brand.splice(queryObj.brand.indexOf(parametr), 1);
   createUrl(queryObj);
 }
-
