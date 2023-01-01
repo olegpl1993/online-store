@@ -3,24 +3,29 @@ import { createElement } from '../createElement'
 import { card } from '../card/card';
 import { products } from './../state';
 import { state } from '../state';
-import { sortState } from '../functions';
 import { parseSearch } from '../functions';
+import { addToUrl } from '../functions';
+import { delFromUrl } from '../functions';
+import { updateState } from './../state';
 
 export function main(contentBox: HTMLElement) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
-  const hash = window.location.hash; //получает хеш из строки браузера
-  const queryObj = parseSearch(hash); // получение query параметров из hash
-  if (queryObj.sort) sortState(queryObj.sort); // сортировка state
+  const queryObj = parseSearch(); // получение query параметров
+  updateState(); // обновить фильтрацию и сортировку state
 
   const mainBox = createElement(contentBox, 'div', 'main');
   const mainFilterColum = createElement(mainBox, 'div', 'mainFilterColum');
   const mainProductsColum = createElement(mainBox, 'div', 'mainProductsColum');
 
   // кнопки очистить фильтры и копировать ссылку ---------------------------------------
-  const mainFilterBtnRow = createElement(mainFilterColum, 'div', 'mainFilterBtnRow');
-  const mainFilterBtnResetFilters = createElement(mainFilterBtnRow, 'button', 'mainFilterBtnResetFilters', `Reset filters`);
-  const mainFilterBtnCopyLink = createElement(mainFilterBtnRow, 'button', 'mainFilterBtnCopyLink', `Copy link`);
+  const filterBtnRow = createElement(mainFilterColum, 'div', 'mainFilterBtnRow');
+  const resetFilters = createElement(filterBtnRow, 'button', 'mainFilterBtnResetFilters', `Reset filters`);
+  resetFilters.addEventListener('click', () => {
+    window.history.pushState({}, "", '#'); // очищает url строку
+    main(contentBox);
+  })
+  const copyLink = createElement(filterBtnRow, 'button', 'mainFilterBtnCopyLink', `Copy link`);
 
   // фильтр категории --------------------------------------------------------------------------
   const mainFilterCategoryBox = createElement(mainFilterColum, 'div', 'mainFilterCategoryBox');
@@ -34,8 +39,18 @@ export function main(contentBox: HTMLElement) {
     const categoryRow = createElement(mainFilterCategoryList, 'div', 'categoryRow');
     const categoryCheckbox = createElement(categoryRow, 'input', 'categoryCheckbox');
     (categoryCheckbox as HTMLInputElement).type = 'checkbox';
+    (categoryCheckbox as HTMLInputElement).value = key;
+    if (queryObj.category.includes((categoryCheckbox as HTMLInputElement).value)) {
+      (categoryCheckbox as HTMLInputElement).checked = true; // делает активным выбранную фильтрацию
+    }
     const categoryName = createElement(categoryRow, 'div', 'categoryName', `${key}`);
     const categoryCount = createElement(categoryRow, 'div', 'categoryCount', `${categoryListObj[key]}`);
+
+    (categoryCheckbox as HTMLInputElement).addEventListener('change', e => { // слушатель события при изменение select
+      if (!(e.target as HTMLInputElement).checked) delFromUrl('category', (e.target as HTMLSelectElement).value); // удаляет query из url
+      else addToUrl('category', (e.target as HTMLSelectElement).value); // добавляет query в URL
+      main(contentBox);
+    })
   }
 
   // фильтр бренд -------------------------------------------------------------------------------
@@ -67,7 +82,7 @@ export function main(contentBox: HTMLElement) {
   const sortCardBox = createElement(mainProductsColum, 'div', 'sortCardBox');
 
   const sortCardSelect = createElement(sortCardBox, 'select', 'sortCardSelect');
-  const sortCardOption0 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort optins:'); //по умолчанию при выборе первой опции событие не исполняется
+  const sortCardOption0 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort options:'); //по умолчанию
   (sortCardOption0 as HTMLSelectElement).disabled = true;
   const sortCardOption1 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by price ↑');
   sortCardOption1.setAttribute('value', 'priceup');
@@ -78,10 +93,10 @@ export function main(contentBox: HTMLElement) {
   const sortCardOption4 = createElement(sortCardSelect, 'option', 'sortCardOption', 'Sort by rating ↓');
   sortCardOption4.setAttribute('value', 'ratingdown');
   sortCardSelect.addEventListener('change', e => { // слушатель события при изменение select
-    window.history.pushState({}, "", `#?sort=${(e.target as HTMLSelectElement).value}`); // добавляет query sort в URL
+    addToUrl('sort', (e.target as HTMLSelectElement).value); // добавляет query category в URL
     main(contentBox); // отрисовка карточек товара
   })
-  if (queryObj.sort) (sortCardSelect as HTMLSelectElement).value = queryObj.sort; // делает активным выбранную сортировку
+  if (queryObj.sort.length > 0) (sortCardSelect as HTMLSelectElement).value = queryObj.sort[0]; // делает активным выбранную сортировку
 
   const foundCard = createElement(sortCardBox, 'div', 'sortCardSelect', `Found: ${state.length}`);
 
