@@ -7,7 +7,7 @@ export const products = data.products; // получаем массив прод
 
 export let state = createState(); // отсортированный массив (текущее состояние)
 
-export const cartState: Product[] = loadCartStateFromLS(); // загружает массив продуктов из LS или создает пустой []
+export let cartState: Product[] = loadCartStateFromLS(); // загружает массив продуктов из LS или создает пустой []
 
 export const arrPromoCods = ['RS', 'EPM']; // доступные для ввода промо коды
 
@@ -21,3 +21,6 @@ export const cartPages = {
 
 // обработка state в соотвествии с query в url адресе (для повторного вызова при изменении url)
 export const updateState = () => state = createState();
+
+// очистка корзины
+export const clearCartState = () => cartState = [];
