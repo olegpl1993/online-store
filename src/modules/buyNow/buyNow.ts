@@ -5,6 +5,9 @@ import { contentBox } from '../..';
 import { clearCartState } from '../state';
 import { header } from '../header/header';
 import { headerBox } from '../..';
+import visaImg from "../../images/visa.png";
+import mastercardImg from "../../images/mastercard.png";
+import americanExpressImg from "../../images/americanExpress.png";
 
 export function buyNow(buyNowBox: HTMLElement) {
   while (buyNowBox.firstChild) buyNowBox.removeChild(buyNowBox.firstChild); // очищаем узел buyNowBox
@@ -46,7 +49,7 @@ export function buyNow(buyNowBox: HTMLElement) {
   (phoneNumber as HTMLInputElement).type = 'text';
   (phoneNumber as HTMLInputElement).placeholder = 'Phone number';
   phoneNumber.addEventListener('input', () => {
-    validObj.phoneNumber = (phoneNumber as HTMLInputElement).value.match(/\+[0-9]{9,}/) ? true : false;
+    validObj.phoneNumber = (phoneNumber as HTMLInputElement).value.match(/^[+][0-9]{9,}$/) ? true : false;
     validObj.updateCollor();
   })
 
@@ -54,7 +57,7 @@ export function buyNow(buyNowBox: HTMLElement) {
   (deliveryAddress as HTMLInputElement).type = 'text';
   (deliveryAddress as HTMLInputElement).placeholder = 'Delivery address';
   deliveryAddress.addEventListener('input', () => {
-    validObj.deliveryAddress = (deliveryAddress as HTMLInputElement).value.match(/ /) ? true : false;
+    validObj.deliveryAddress = (deliveryAddress as HTMLInputElement).value.match(/[a-zA-Z]{5,}\s[a-zA-Z]{5,}(\s[a-zA-Z]{5,})+/) ? true : false;
     validObj.updateCollor();
   })
 
@@ -70,11 +73,26 @@ export function buyNow(buyNowBox: HTMLElement) {
 
   const cardData = createElement(buyNowWindow, 'div', 'cardData');
 
-  const cardNumber = createElement(cardData, 'input', 'cardNumber inputStr');
+  const cardRow = createElement(cardData, 'div', 'cardRow');
+
+  const cardImg = createElement(cardRow, 'div', 'cardImg');
+  cardImg.style.background = `white`;
+
+
+  const cardNumber = createElement(cardRow, 'input', 'cardNumber inputStr');
   (cardNumber as HTMLInputElement).type = 'text';
   (cardNumber as HTMLInputElement).placeholder = 'Card number';
   cardNumber.addEventListener('input', () => {
-    validObj.cardNumber = (cardNumber as HTMLInputElement).value.match(/ /) ? true : false;
+    validObj.cardNumber = (cardNumber as HTMLInputElement).value.match(/^[0-9]{16}/) ? true : false;
+    if ((cardNumber as HTMLInputElement).value.length > 16)
+    (cardNumber as HTMLInputElement).value = (cardNumber as HTMLInputElement).value.slice(0, -1);
+    if ((cardNumber as HTMLInputElement).value[0] === '3') cardImg.style.background = `url(${americanExpressImg})`;
+    else if ((cardNumber as HTMLInputElement).value[0] === '4') cardImg.style.background = `url(${visaImg})`;
+    else if ((cardNumber as HTMLInputElement).value[0] === '5') cardImg.style.background = `url(${mastercardImg})`;
+    else cardImg.style.background = `white`;
+    cardImg.style.backgroundPosition = 'center';
+    cardImg.style.backgroundRepeat = 'no-repeat';
+    cardImg.style.backgroundSize = 'contain';
     validObj.updateCollor();
   })
 
@@ -84,7 +102,10 @@ export function buyNow(buyNowBox: HTMLElement) {
   (validThru as HTMLInputElement).type = 'text';
   (validThru as HTMLInputElement).placeholder = 'Valid Thru';
   validThru.addEventListener('input', () => {
-    validObj.validThru = (validThru as HTMLInputElement).value.match(/ /) ? true : false;
+    validObj.validThru = (validThru as HTMLInputElement).value.match(/^[1-12]{2}\/[1-99]{2}/) ? true : false;
+    if ((validThru as HTMLInputElement).value.length === 2) (validThru as HTMLInputElement).value += '/';
+    if ((validThru as HTMLInputElement).value.length > 5)
+      (validThru as HTMLInputElement).value = (validThru as HTMLInputElement).value.slice(0, -1);
     validObj.updateCollor();
   })
 
@@ -92,7 +113,9 @@ export function buyNow(buyNowBox: HTMLElement) {
   (cvvCode as HTMLInputElement).type = 'text';
   (cvvCode as HTMLInputElement).placeholder = 'CVV code';
   cvvCode.addEventListener('input', () => {
-    validObj.cvvCode = (cvvCode as HTMLInputElement).value.match(/ /) ? true : false;
+    validObj.cvvCode = (cvvCode as HTMLInputElement).value.match(/^[0-9]{3}/) ? true : false;
+    if ((cvvCode as HTMLInputElement).value.length > 3)
+      (cvvCode as HTMLInputElement).value = (cvvCode as HTMLInputElement).value.slice(0, -1);
     validObj.updateCollor();
   })
 

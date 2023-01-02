@@ -28,6 +28,19 @@
     gap: 10px;
   }
 
+  .cardRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .cardImg {
+      height: 37px;
+      width: 60px;
+    }
+  }
+
   .validCvvRow {
     display: flex;
     flex-direction: row;
