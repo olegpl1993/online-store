@@ -90,6 +90,7 @@ export function addToUrl(name: string, parametr: string) {
   if (name === 'category' && (!(queryObj.category.includes(parametr)))) queryObj.category.push(parametr);
   if (name === 'brand' && (!(queryObj.brand.includes(parametr)))) queryObj.brand.push(parametr);
   if (name === 'search') queryObj.search = [encodeURI(parametr)];
+  if (name === 'price') queryObj.price = [encodeURI(parametr)];
   createUrl(queryObj);
 }
 
@@ -98,5 +99,6 @@ export function delFromUrl(name: string, parametr: string) {
   const queryObj = parseSearch(); // получение query параметров
   if (name === 'category' && queryObj.category.includes(parametr)) queryObj.category.splice(queryObj.category.indexOf(parametr), 1);
   if (name === 'brand' && queryObj.brand.includes(parametr)) queryObj.brand.splice(queryObj.brand.indexOf(parametr), 1);
+  if (name === 'price') queryObj.price = [];
   createUrl(queryObj);
 }

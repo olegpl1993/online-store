@@ -104,29 +104,49 @@ export function main(contentBox: HTMLElement) {
   const priceMax = Math.max(...priceArr);
 
   const rangeRow = createElement(fromToBox, 'div', 'rangeRow');
-  
+
   const range1 = createElement(rangeRow, 'input', 'range1');
   (range1 as HTMLInputElement).type = 'range';
   (range1 as HTMLInputElement).min = String(priceMin);
   (range1 as HTMLInputElement).max = String(priceMax);
-  (range1 as HTMLInputElement).value = String(priceMin);
+  (range1 as HTMLInputElement).value = queryObj.price[0] ? queryObj.price[0].split('/')[0] : String(priceMin);
+  (range1 as HTMLInputElement).addEventListener('change', () => {
+    const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    const priceStrToUrl = minInput === maxInput ? `${minInput}` : `${minInput}/${maxInput}`;
+    delFromUrl('price', priceStrToUrl);
+    addToUrl('price', priceStrToUrl);
+    main(contentBox); // отрисовка карточек товара
+  });
   (range1 as HTMLInputElement).addEventListener('input', () => {
-    console.log((range1 as HTMLInputElement).value)
-  })
+    const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    (fromToRow as HTMLDivElement).textContent = minInput === maxInput ? `$${minInput}` : `$${minInput} ⟷ $${maxInput}`;
+  });
 
   const range2 = createElement(rangeRow, 'input', 'range2');
   (range2 as HTMLInputElement).type = 'range';
   (range2 as HTMLInputElement).min = String(priceMin);
   (range2 as HTMLInputElement).max = String(priceMax);
-  (range2 as HTMLInputElement).value = String(priceMax);
+  (range2 as HTMLInputElement).value = queryObj.price[0] ? queryObj.price[0].split('/')[1] : String(priceMax);
+  (range2 as HTMLInputElement).addEventListener('change', () => {
+    const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    const priceStrToUrl = minInput === maxInput ? `${minInput}` : `${minInput}/${maxInput}`;
+    delFromUrl('price', priceStrToUrl);
+    addToUrl('price', priceStrToUrl);
+    main(contentBox); // отрисовка карточек товара
+  });
   (range2 as HTMLInputElement).addEventListener('input', () => {
-    console.log((range2 as HTMLInputElement).value)
-  })
+    const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+    (fromToRow as HTMLDivElement).textContent = minInput === maxInput ? `$${minInput}` : `$${minInput} ⟷ $${maxInput}`;
+  });
 
   const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
   const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
-
-  const fromToRow = createElement(fromToBox, 'div', 'fromToRow', `$${minInput} ⟷ $${maxInput}`);
+  const minMaxString = minInput === maxInput ? `$${minInput}` : `$${minInput} ⟷ $${maxInput}`;
+  const fromToRow = createElement(fromToBox, 'div', 'fromToRow', minMaxString);
 
   // блок с сортировкой карточек ------------------------------------------------------------------
   const sortCardBox = createElement(mainProductsColum, 'div', 'sortCardBox');
