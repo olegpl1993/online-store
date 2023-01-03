@@ -98,24 +98,29 @@ export function main(contentBox: HTMLElement) {
   const priceTitle = createElement(priceBox, 'div', 'priceTitle', `Price`);
   const fromToBox = createElement(priceBox, 'div', 'fromToBox');
 
-  const priceArr: number[] = []; // массив цен на товары
+  const priceArr: number[] = []; // массив цен на товары в state
   state.forEach(el => priceArr.push(el.price));
   const priceMin = Math.min(...priceArr);
   const priceMax = Math.max(...priceArr);
+
+  const priceArrAllProducts: number[] = []; // массив цен на товары всех продуктов
+  products.forEach(el => priceArrAllProducts.push(el.price));
+  const priceMinAllProducts = Math.min(...priceArrAllProducts);
+  const priceMaxAllProducts = Math.max(...priceArrAllProducts);
 
   const rangeRow = createElement(fromToBox, 'div', 'rangeRow');
 
   const range1 = createElement(rangeRow, 'input', 'range1');
   (range1 as HTMLInputElement).type = 'range';
-  (range1 as HTMLInputElement).min = String(priceMin);
-  (range1 as HTMLInputElement).max = String(priceMax);
+  (range1 as HTMLInputElement).min = String(priceMinAllProducts);
+  (range1 as HTMLInputElement).max = String(priceMaxAllProducts);
   (range1 as HTMLInputElement).value = queryObj.price[0] ? queryObj.price[0].split('/')[0] : String(priceMin);
   (range1 as HTMLInputElement).addEventListener('change', () => {
     const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
     const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
     const priceStrToUrl = minInput === maxInput ? `${minInput}` : `${minInput}/${maxInput}`;
-    delFromUrl('price', priceStrToUrl);
     addToUrl('price', priceStrToUrl);
+    if (priceMinAllProducts === minInput && priceMaxAllProducts === maxInput) delFromUrl('price', priceStrToUrl);
     main(contentBox); // отрисовка карточек товара
   });
   (range1 as HTMLInputElement).addEventListener('input', () => {
@@ -126,15 +131,15 @@ export function main(contentBox: HTMLElement) {
 
   const range2 = createElement(rangeRow, 'input', 'range2');
   (range2 as HTMLInputElement).type = 'range';
-  (range2 as HTMLInputElement).min = String(priceMin);
-  (range2 as HTMLInputElement).max = String(priceMax);
+  (range2 as HTMLInputElement).min = String(priceMinAllProducts);
+  (range2 as HTMLInputElement).max = String(priceMaxAllProducts);
   (range2 as HTMLInputElement).value = queryObj.price[0] ? queryObj.price[0].split('/')[1] : String(priceMax);
   (range2 as HTMLInputElement).addEventListener('change', () => {
     const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
     const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
     const priceStrToUrl = minInput === maxInput ? `${minInput}` : `${minInput}/${maxInput}`;
-    delFromUrl('price', priceStrToUrl);
     addToUrl('price', priceStrToUrl);
+    if (priceMinAllProducts === minInput && priceMaxAllProducts === maxInput) delFromUrl('price', priceStrToUrl);
     main(contentBox); // отрисовка карточек товара
   });
   (range2 as HTMLInputElement).addEventListener('input', () => {

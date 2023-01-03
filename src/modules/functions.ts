@@ -7,6 +7,7 @@ export function createState() {
   let tempState: Product[] = [...products];
   if (queryObj.category[0]) tempState = filterCategory(tempState); // фильтррация state по категории
   if (queryObj.brand[0]) tempState = filterBrand(tempState); // фильтррация state по бренду
+  if (queryObj.price[0]) tempState = filterPrice(tempState); // фильтррация state по цене
   if (queryObj.sort[0]) tempState = sortState(queryObj.sort[0], tempState); // сортировка state
   if (queryObj.search[0]) tempState = searchTitle(tempState); // сортировка state
   return [...tempState];
@@ -29,6 +30,15 @@ function filterCategory(tempLocalState: Product[]) {
     const tempState = tempLocalState.filter(prod => prod.category === el);
     newLocalState = [...newLocalState, ...tempState]; // заполняем пустой массив подходящими по сортировке продуктами
   }
+  return newLocalState;
+}
+
+function filterPrice(tempLocalState: Product[]) {
+  const queryObj = parseSearch(); // получение query параметров
+  let newLocalState: Product[] = [];
+  const tempState = tempLocalState
+  .filter(prod => prod.price >= Number(queryObj.price[0].split('/')[0]) && prod.price <= Number(queryObj.price[0].split('/')[1]));
+  newLocalState = [...newLocalState, ...tempState]; // заполняем пустой массив подходящими по сортировке продуктами
   return newLocalState;
 }
 
