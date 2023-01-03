@@ -97,10 +97,36 @@ export function main(contentBox: HTMLElement) {
   const priceBox = createElement(mainFilterColum, 'div', 'priceBox');
   const priceTitle = createElement(priceBox, 'div', 'priceTitle', `Price`);
   const fromToBox = createElement(priceBox, 'div', 'fromToBox');
-  const fromToRow = createElement(fromToBox, 'div', 'fromToRow', `$${5} ⟷ $${1500}`);
 
-  const fromToRange = createElement(fromToBox, 'input', 'fromToRange');
-  (fromToRange as HTMLInputElement).type = 'range';
+  const priceArr: number[] = []; // массив цен на товары
+  state.forEach(el => priceArr.push(el.price));
+  const priceMin = Math.min(...priceArr);
+  const priceMax = Math.max(...priceArr);
+
+  const rangeRow = createElement(fromToBox, 'div', 'rangeRow');
+  
+  const range1 = createElement(rangeRow, 'input', 'range1');
+  (range1 as HTMLInputElement).type = 'range';
+  (range1 as HTMLInputElement).min = String(priceMin);
+  (range1 as HTMLInputElement).max = String(priceMax);
+  (range1 as HTMLInputElement).value = String(priceMin);
+  (range1 as HTMLInputElement).addEventListener('input', () => {
+    console.log((range1 as HTMLInputElement).value)
+  })
+
+  const range2 = createElement(rangeRow, 'input', 'range2');
+  (range2 as HTMLInputElement).type = 'range';
+  (range2 as HTMLInputElement).min = String(priceMin);
+  (range2 as HTMLInputElement).max = String(priceMax);
+  (range2 as HTMLInputElement).value = String(priceMax);
+  (range2 as HTMLInputElement).addEventListener('input', () => {
+    console.log((range2 as HTMLInputElement).value)
+  })
+
+  const minInput = Math.min(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+  const maxInput = Math.max(Number((range1 as HTMLInputElement).value), Number((range2 as HTMLInputElement).value));
+
+  const fromToRow = createElement(fromToBox, 'div', 'fromToRow', `$${minInput} ⟷ $${maxInput}`);
 
   // блок с сортировкой карточек ------------------------------------------------------------------
   const sortCardBox = createElement(mainProductsColum, 'div', 'sortCardBox');
