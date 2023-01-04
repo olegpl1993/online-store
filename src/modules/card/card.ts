@@ -13,9 +13,7 @@ export function card(contentBox: HTMLElement, id: number) {
 
   // проверка что продукт есть в корзине
   const inCartArr: boolean[] = [];
-  cartState.forEach(productInCart => {
-    inCartArr.push(productInCart.id === productItem.id);
-  });
+  cartState.forEach(productInCart => { inCartArr.push(productInCart.id === productItem.id) });
   const inCart = inCartArr.includes(true);
 
   const card = createElement(contentBox, 'div', 'card');
