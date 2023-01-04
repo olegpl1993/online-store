@@ -46,8 +46,11 @@
     background-color: rgb(153, 255, 153);
     border: 1px solid black;
     border-radius: 10px;
-    font-size: 25px;
+    font-size: 20px;
     padding: 5px;
     color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
