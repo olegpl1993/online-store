@@ -193,6 +193,6 @@ export function main(contentBox: HTMLElement) {
     card(mainProductsCardBox, +product);
   }
 
-  return main;
+  return mainBox;
 }
 

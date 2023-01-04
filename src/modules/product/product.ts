@@ -7,11 +7,17 @@ import { headerBox } from '../..';
 import { cart } from '../cart/cart';
 
 export function product(contentBox: HTMLElement, id: number) {
+  while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
   const productItem = products[id - 1];
 
+  // проверка что продукт есть в корзине
+  const inCartArr: boolean[] = [];
+  cartState.forEach(productInCart => { inCartArr.push(productInCart.id === productItem.id) });
+  const inCart = inCartArr.includes(true);
+
   const pathStr = `STORE >> ${productItem.category} >> ${productItem.brand} >> ${productItem.title}`.toUpperCase();
-  const product = createElement(contentBox, 'h2', 'product', pathStr);
+  const productBox = createElement(contentBox, 'h2', 'product', pathStr);
 
   const cardWrap = createElement(contentBox, 'div', 'card-item')
   cardWrap.innerHTML = `
@@ -28,8 +34,8 @@ export function product(contentBox: HTMLElement, id: number) {
     <h5 class="description-brand">${productItem.brand}</h5>
     <p class="description-price">${productItem.price}</p>
     <p class="description-text">${productItem.description}</p>
-    <button class="description-button">Add to Cart</button>
-    <button class="description-button buyNowBtn">Buy now</button>
+    <button class="description-button addRemoveBtn">${inCart ? 'Remove' : 'Add to Cart'}</button>
+    <button class="description-button buyNowBtn">'Buy now'</button>
     <h5 class="description-discount">Discount percentage: ${productItem.discountPercentage}</h5>
     </div>
     `
@@ -50,18 +56,27 @@ export function product(contentBox: HTMLElement, id: number) {
     });
   }
 
-  const productAddToCart = document.querySelector('.description-button');
-  productAddToCart?.addEventListener('click', () => {
-    cartState.push(productItem); // добавляет товар в корзину
-    header(headerBox); // повторная отрисовка хедера
-  });
+  const addRemoveBtn = document.querySelector('.addRemoveBtn');
+  if (inCart) {
+    addRemoveBtn?.addEventListener('click', () => {
+      cartState.splice(cartState.indexOf(productItem), 1); // удаляет товар из корзины
+      header(headerBox); // повторная отрисовка хедера
+      product(contentBox, id);
+    });
+  } else {
+    addRemoveBtn?.addEventListener('click', () => {
+      cartState.push(productItem); // добавляет товар в корзину
+      header(headerBox); // повторная отрисовка хедера
+      product(contentBox, id);
+    });
+  }
 
   const buyNowBtn = document.querySelector('.buyNowBtn');
   buyNowBtn?.addEventListener('click', () => {
-    cartState.push(productItem); // добавляет товар в корзину
+    if (!cartState.includes(productItem)) cartState.push(productItem); // если товара нету добавляет товар в корзину
     header(headerBox); // повторная отрисовка хедера
     cart(contentBox, true); // открывает корзину с модальным окном
   });
 
-  return product;
+  return productBox;
 }

@@ -41,8 +41,9 @@
       justify-content: center;
       ul {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         padding: 0;
+        flex-wrap: wrap;
       }
 
       li {
