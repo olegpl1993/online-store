@@ -12,12 +12,14 @@
 
   .inputStr {
     border: 2px solid red;
-    padding: 10px;
+    border-radius: 5px;
+    padding: 5px;
     font-size: 20px;
+    text-align: center;
   }
 
   .cardData {
-    padding: 25px;
+    padding: 10px;
     border: 2px solid black;
     border-radius: 20px;
     background-color: gold;
@@ -38,6 +40,10 @@
     .cardImg {
       height: 37px;
       width: 60px;
+    }
+
+    .cardNumber {
+      width: 200px;
     }
   }
 

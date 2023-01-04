@@ -16,7 +16,7 @@ export function product(contentBox: HTMLElement, id: number) {
   const cardWrap = createElement(contentBox, 'div', 'card-item')
   cardWrap.innerHTML = `
   <div class="photo">
-  <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} width="220" height="220">
+  <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} loading = "lazy" width="220" height="220">
   <div class="photo-album">
   <ul class="photo-list">
   </ul>
@@ -43,6 +43,7 @@ export function product(contentBox: HTMLElement, id: number) {
       img.src = val;
       img.width = 57;
       img.height = 57;
+      img.loading = 'lazy';
       photoListItem.appendChild(img);
       (img as HTMLImageElement).addEventListener('click',
         event => (photoThumb as HTMLImageElement).src = ((event.target as HTMLImageElement).src));
