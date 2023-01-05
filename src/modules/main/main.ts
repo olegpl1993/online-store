@@ -187,6 +187,26 @@ export function main(contentBox: HTMLElement) {
     (searchCard as HTMLInputElement).focus(); // ставит курсор
   }
 
+  // кнопки изменения вида карточек ---------------------------------------------------------
+  const sizeBtnRow = createElement(sortCardBox, 'div', 'sizeBtnRow');
+  if (queryObj.size[0] === 'small') {
+    const sizeBtn = createElement(sizeBtnRow, 'button', 'bigSizeBtn');
+    for (let i = 0; i < 9; i++) createElement(sizeBtn, 'div', 'bigSizeBtnPoint');
+    sizeBtn.addEventListener('click', () => { // слушатель события при изменение size
+      console.log('big')
+      addToUrl('size', 'big'); // добавляет query в URL
+      main(contentBox); // отрисовка карточек товара
+    })
+  } else {
+    const sizeBtn = createElement(sizeBtnRow, 'button', 'smallSizeBtn');
+    for (let i = 0; i < 20; i++) createElement(sizeBtn, 'div', 'smallSizeBtnPoint');
+    sizeBtn.addEventListener('click', () => { // слушатель события при изменение size
+      console.log('small')
+      addToUrl('size', 'small'); // добавляет query в URL
+      main(contentBox); // отрисовка карточек товара
+    })
+  }
+
   // блок с карточками ----------------------------------------------------------------------
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
   for (const product in state) {

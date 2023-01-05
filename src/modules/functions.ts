@@ -70,6 +70,7 @@ export function parseSearch() {
     category: [],
     brand: [],
     price: [],
+    size: []
   };
   for (const el of arrOfQuery) {
     const filterName = el.split('=')[0]; // название фильтра(сортировки)
@@ -101,6 +102,7 @@ export function addToUrl(name: string, parametr: string) {
   if (name === 'brand' && (!(queryObj.brand.includes(parametr)))) queryObj.brand.push(parametr);
   if (name === 'search') queryObj.search = [encodeURI(parametr)];
   if (name === 'price') queryObj.price = [encodeURI(parametr)];
+  if (name === 'size') queryObj.size = [encodeURI(parametr)];
   createUrl(queryObj);
 }
 
