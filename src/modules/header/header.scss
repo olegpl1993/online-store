@@ -15,8 +15,9 @@
 
 .logo {
   font-size: 30px;
+  font-weight: 600;
   color: red;
-  text-shadow: 1px 1px 10px rgb(255, 0, 43);
+  text-shadow: 1px 1px 10px rgb(255, 105, 130);
   cursor: pointer;
 }
 
@@ -29,7 +30,7 @@
 
 .total {
   font-size: 25px;
-  color: rgb(255, 0, 0);
+  color: black;
   display: flex;
   gap: 5px;
 }
@@ -53,7 +54,7 @@
   font-weight: 700;
   color: rgb(255, 0, 0);
   border: 2px solid rgb(255, 0, 0);
-  background-color: rgb(171, 255, 178);
+  background-color: rgb(192, 255, 197);
   border-radius: 50%;
   display: flex;
   align-items: center;
