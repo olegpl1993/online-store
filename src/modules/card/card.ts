@@ -44,7 +44,7 @@ export function card(contentBox: HTMLElement, id: number) {
   (details as HTMLAnchorElement).href = `#product/${productItem.id}`;
   details.addEventListener('click', (event) => route(event));
   if (inCart) {
-    const removeProduct = createElement(buttonRow, 'button', 'addToCart', 'REMOVE PRODUCT');
+    const removeProduct = createElement(buttonRow, 'button', 'addToCart', 'REMOVE');
     removeProduct.addEventListener('click', () => {
       cartState.splice(cartState.indexOf(productItem), 1); // удаляет товар из корзины
       header(headerBox); // повторная отрисовка хедера

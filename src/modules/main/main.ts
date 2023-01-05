@@ -20,6 +20,12 @@ export function main(contentBox: HTMLElement) {
 
   // кнопки очистить фильтры и копировать ссылку ---------------------------------------
   const filterBtnRow = createElement(mainFilterColum, 'div', 'mainFilterBtnRow');
+  const openFilters = createElement(filterBtnRow, 'button', 'openFilters', `${queryObj.filterDisplay[0] ? 'Close filters' : 'Open filters'}`);
+  openFilters.addEventListener('click', () => {
+    if (queryObj.filterDisplay[0]) delFromUrl('filterDisplay', 'flex'); // удаляет query из url
+    else addToUrl('filterDisplay', 'flex'); // добавляет query в URL
+    main(contentBox);
+  })
   const resetFilters = createElement(filterBtnRow, 'button', 'mainFilterBtnResetFilters', `Reset filters`);
   resetFilters.addEventListener('click', () => {
     window.history.pushState({}, "", '#'); // очищает url строку
@@ -37,6 +43,7 @@ export function main(contentBox: HTMLElement) {
 
   // фильтр категории --------------------------------------------------------------------------
   const mainFilterCategoryBox = createElement(mainFilterColum, 'div', 'mainFilterCategoryBox');
+  if (queryObj.filterDisplay[0]) mainFilterCategoryBox.classList.add('_filterDisplay');
   const mainFilterCategoryTitle = createElement(mainFilterCategoryBox, 'div', 'mainFilterCategoryTitle', `Category`);
   const mainFilterCategoryList = createElement(mainFilterCategoryBox, 'div', 'mainFilterCategoryList');
 
@@ -66,6 +73,7 @@ export function main(contentBox: HTMLElement) {
 
   // фильтр бренд -------------------------------------------------------------------------------
   const mainFilterBrandBox = createElement(mainFilterColum, 'div', 'mainFilterBrandBox');
+  if (queryObj.filterDisplay[0]) mainFilterBrandBox.classList.add('_filterDisplay');
   const brandTitle = createElement(mainFilterBrandBox, 'div', 'brandTitle', `Brand`);
   const brandList = createElement(mainFilterBrandBox, 'div', 'brandList');
 
@@ -95,6 +103,7 @@ export function main(contentBox: HTMLElement) {
 
   // фильтр цена -----------------------------------------------------------------------------
   const priceBox = createElement(mainFilterColum, 'div', 'priceBox');
+  if (queryObj.filterDisplay[0]) priceBox.classList.add('_filterDisplay');
   const priceTitle = createElement(priceBox, 'div', 'priceTitle', `Price`);
   const fromToBox = createElement(priceBox, 'div', 'fromToBox');
 

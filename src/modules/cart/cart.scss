@@ -1,5 +1,5 @@
 .cart {
-  font-size: 25px;
+  font-size: 20px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -112,7 +112,7 @@
         }
 
         .numberColum {
-          font-size: 30px;
+          font-size: 25px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -131,6 +131,7 @@
           .numberBtn {
             padding: 10px;
             border: 1px solid black;
+            background-color: rgb(180, 255, 181);
             border-radius: 50%;
             height: 30px;
             width: 30px;
