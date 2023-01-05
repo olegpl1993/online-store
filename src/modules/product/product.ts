@@ -35,7 +35,7 @@ export function product(contentBox: HTMLElement, id: number) {
     <p class="description-price">${productItem.price}</p>
     <p class="description-text">${productItem.description}</p>
     <button class="description-button addRemoveBtn">${inCart ? 'Remove' : 'Add to Cart'}</button>
-    <button class="description-button buyNowBtn">'Buy now'</button>
+    <button class="description-button buyNowBtn">Buy now</button>
     <h5 class="description-discount">Discount percentage: ${productItem.discountPercentage}</h5>
     </div>
     `

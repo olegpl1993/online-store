@@ -102,8 +102,9 @@ export function buyNow(buyNowBox: HTMLElement) {
   (validThru as HTMLInputElement).type = 'text';
   (validThru as HTMLInputElement).placeholder = 'Valid Thru';
   validThru.addEventListener('input', () => {
-    validObj.validThru = (validThru as HTMLInputElement).value.match(/^[1-12]{2}\/[1-99]{2}/) ? true : false;
-    if ((validThru as HTMLInputElement).value.length === 2) (validThru as HTMLInputElement).value += '/';
+    validObj.validThru = (validThru as HTMLInputElement).value.match(/^[0-9]{2}\/[0-9]{2}/) ? true : false;
+    if ((validThru as HTMLInputElement).value.length === 2 && +(validThru as HTMLInputElement).value <= 12) (validThru as HTMLInputElement).value += '/'
+    if ((validThru as HTMLInputElement).value.length === 2 && +(validThru as HTMLInputElement).value >= 12) (validThru as HTMLInputElement).value = '';
     if ((validThru as HTMLInputElement).value.length > 5)
       (validThru as HTMLInputElement).value = (validThru as HTMLInputElement).value.slice(0, -1);
     validObj.updateCollor();

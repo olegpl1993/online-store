@@ -70,6 +70,8 @@ export function parseSearch() {
     category: [],
     brand: [],
     price: [],
+    size: [],
+    filterDisplay: []
   };
   for (const el of arrOfQuery) {
     const filterName = el.split('=')[0]; // название фильтра(сортировки)
@@ -101,6 +103,8 @@ export function addToUrl(name: string, parametr: string) {
   if (name === 'brand' && (!(queryObj.brand.includes(parametr)))) queryObj.brand.push(parametr);
   if (name === 'search') queryObj.search = [encodeURI(parametr)];
   if (name === 'price') queryObj.price = [encodeURI(parametr)];
+  if (name === 'size') queryObj.size = [encodeURI(parametr)];
+  if (name === 'filterDisplay') queryObj.filterDisplay = [encodeURI(parametr)];
   createUrl(queryObj);
 }
 
@@ -110,5 +114,6 @@ export function delFromUrl(name: string, parametr: string) {
   if (name === 'category' && queryObj.category.includes(parametr)) queryObj.category.splice(queryObj.category.indexOf(parametr), 1);
   if (name === 'brand' && queryObj.brand.includes(parametr)) queryObj.brand.splice(queryObj.brand.indexOf(parametr), 1);
   if (name === 'price') queryObj.price = [];
+  if (name === 'filterDisplay') queryObj.filterDisplay = [];
   createUrl(queryObj);
 }
