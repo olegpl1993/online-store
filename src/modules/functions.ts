@@ -37,7 +37,7 @@ function filterPrice(tempLocalState: Product[]) {
   const queryObj = parseSearch(); // получение query параметров
   let newLocalState: Product[] = [];
   const tempState = tempLocalState
-  .filter(prod => prod.price >= Number(queryObj.price[0].split('/')[0]) && prod.price <= Number(queryObj.price[0].split('/')[1]));
+    .filter(prod => prod.price >= Number(queryObj.price[0].split('/')[0]) && prod.price <= Number(queryObj.price[0].split('/')[1]));
   newLocalState = [...newLocalState, ...tempState]; // заполняем пустой массив подходящими по сортировке продуктами
   return newLocalState;
 }
@@ -54,7 +54,13 @@ function filterBrand(tempLocalState: Product[]) {
 
 function searchTitle(tempLocalState: Product[]) {
   const queryObj = parseSearch(); // получение query параметров
-  const tempState = tempLocalState.filter(prod => (prod.title.toLocaleLowerCase()).includes(queryObj.search[0].toLowerCase()));
+  const searchText = queryObj.search[0].toLowerCase(); // текст для поиска
+  const searchInTitle = tempLocalState.filter(prod => (prod.title.toLowerCase()).includes(searchText));
+  const searchInDescription = tempLocalState.filter(prod => (prod.description.toLowerCase()).includes(searchText));
+  const searchInBrand = tempLocalState.filter(prod => (prod.brand.toLowerCase()).includes(searchText));
+  const searchInCategory = tempLocalState.filter(prod => (prod.category.toLowerCase()).includes(searchText));
+  const searchInPrice = tempLocalState.filter(prod => (String(prod.price).toLowerCase()).includes(searchText));
+  const tempState = Array.from(new Set([...searchInTitle, ...searchInDescription, ...searchInBrand, ...searchInCategory, ...searchInPrice]));
   return tempState;
 }
 // ----------------------------------------------------------------------------------------------------------------------
