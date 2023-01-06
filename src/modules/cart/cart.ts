@@ -11,6 +11,8 @@ import { buyNow } from '../buyNow/buyNow';
 
 export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
+  
+  header(headerBox); // обновление хедера
 
   const cartStateObj = cartState.map((product) => product.id) // { ID товара : количество товара }
     .reduce((acc: Record<number, number>, el: number) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
@@ -161,5 +163,6 @@ export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
     cart(contentBox, true);
   })
   // -----------------------------------------------------------------------------------------
+
   return cart;
 }

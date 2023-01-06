@@ -8,6 +8,7 @@ import { headerBox } from '../..';
 import { main } from '../main/main';
 import { contentBox as mainContentBox } from '../..';
 import { parseSearch } from '../functions';
+import { saveQuery } from '../state';
 
 export function card(contentBox: HTMLElement, id: number) {
   const productItem = state[id];
@@ -42,7 +43,10 @@ export function card(contentBox: HTMLElement, id: number) {
   const buttonRow = createElement(cardWrapper, 'div', 'buttonRow');
   const details = createElement(buttonRow, 'a', 'details', 'DETAILS');
   (details as HTMLAnchorElement).href = `#product/${productItem.id}`;
-  details.addEventListener('click', (event) => route(event));
+  details.addEventListener('click', (event) => {
+    saveQuery(); // сохраняет query параметры
+    route(event);
+  });
   if (inCart) {
     const removeProduct = createElement(buttonRow, 'button', 'addToCart', 'REMOVE');
     removeProduct.addEventListener('click', () => {

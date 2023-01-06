@@ -24,3 +24,17 @@ export const updateState = () => state = createState();
 
 // очистка корзины
 export const clearCartState = () => cartState = [];
+
+// query параметры из url
+export let queryInUrl: string;
+export const saveQuery = () => {
+  const hash = window.location.hash; // получает хеш из строки браузера
+  const queryString = hash.split('?')[1]; // отделяет поиск от хеша
+  if (queryString) queryInUrl = queryString;
+}
+export const loadQuery = () => {
+  if (queryInUrl) window.history.pushState({}, "", `#?${queryInUrl}`); // добавляет query в URL
+}
+export const clearQuery = () => {
+  queryInUrl = ''; 
+}
