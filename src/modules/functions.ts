@@ -77,13 +77,15 @@ export function parseSearch() {
     brand: [],
     price: [],
     size: [],
-    filterDisplay: []
+    filterDisplay: [],
+    notCorrectQuery: []
   };
   for (const el of arrOfQuery) {
     const filterName = el.split('=')[0]; // название фильтра(сортировки)
     const arrParams = el.split('=')[1].split(','); // выбранные параметры
     for (const el of arrParams) {
-      finalQueryObj[filterName].push(el);
+      if (finalQueryObj[filterName]) finalQueryObj[filterName].push(el)
+      else finalQueryObj.notCorrectQuery.push('true');
     }
   }
   return finalQueryObj;

@@ -12,6 +12,12 @@ export function main(contentBox: HTMLElement) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
   const queryObj = parseSearch(); // получение query параметров
+
+  if (queryObj.notCorrectQuery[0]) { // очищает фильтры если введен не коретный query ключ
+    window.history.pushState({}, "", '#'); // очищает url строку
+    main(contentBox); // рендер главной страницы
+  }
+
   updateState(); // обновить фильтрацию и сортировку state
 
   const mainBox = createElement(contentBox, 'div', 'main');

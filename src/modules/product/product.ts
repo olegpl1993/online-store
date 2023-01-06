@@ -9,7 +9,8 @@ import { cart } from '../cart/cart';
 export function product(contentBox: HTMLElement, id: number) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
-  const productItem = products[id - 1];
+  const productItem = products[id - 1]; // обьект продукта
+  if (!productItem) return createElement(contentBox, 'div', 'product', `Product ${id} not found`); // если введен не коректный номер продукта
 
   // проверка что продукт есть в корзине
   const inCartArr: boolean[] = [];
