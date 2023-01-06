@@ -50,7 +50,7 @@ export function card(contentBox: HTMLElement, id: number) {
   if (inCart) {
     const removeProduct = createElement(buttonRow, 'button', 'addToCart', 'REMOVE');
     removeProduct.addEventListener('click', () => {
-      cartState.splice(cartState.indexOf(productItem), 1); // удаляет товар из корзины
+      cartState.splice(cartState.findIndex((product) => productItem.id === product.id), 1); // удаляет товар из корзины
       header(headerBox); // повторная отрисовка хедера
       main(mainContentBox); // повторная отрисовка main
     });

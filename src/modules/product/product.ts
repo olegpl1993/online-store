@@ -62,7 +62,7 @@ export function product(contentBox: HTMLElement, id: number) {
   const addRemoveBtn = document.querySelector('.addRemoveBtn');
   if (inCart) {
     addRemoveBtn?.addEventListener('click', () => {
-      cartState.splice(cartState.indexOf(productItem), 1); // удаляет товар из корзины
+      cartState.splice(cartState.findIndex((product) => productItem.id === product.id), 1); // удаляет товар из корзины
       header(headerBox); // повторная отрисовка хедера
       product(contentBox, id);
     });
