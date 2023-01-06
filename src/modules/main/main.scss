@@ -143,7 +143,7 @@
     .priceBox,
     .mainFilterBrandBox,
     .mainFilterCategoryBox {
-    display: none;
+      display: none;
     }
     ._filterDisplay {
       display: flex;
@@ -234,5 +234,9 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+
+    .noProductsFound {
+      font-size: 20px;
+    }
   }
 }

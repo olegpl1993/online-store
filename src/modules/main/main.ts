@@ -218,10 +218,8 @@ export function main(contentBox: HTMLElement) {
 
   // блок с карточками ----------------------------------------------------------------------
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
-  for (const product in state) {
-    card(mainProductsCardBox, +product);
-  }
+  if (state.length === 0) createElement(mainProductsCardBox, 'div', 'noProductsFound', 'No products found');
+  else for (const product in state) card(mainProductsCardBox, +product); // рендер карточек товара
 
   return mainBox;
 }
-
