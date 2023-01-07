@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 3px;
   gap: 10px;
   
   @media (max-width: 500px) {
@@ -17,14 +17,11 @@
   font-size: 30px;
   font-weight: 600;
   color: red;
-  text-shadow: 1px 1px 10px rgb(255, 105, 130);
-  cursor: pointer;
-}
-
-.link {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   cursor: pointer;
   &:hover {
-    text-decoration: underline;
+    transform: scale(1.03);
+    transition: transform 0.2s ease;
   }
 }
 
@@ -45,12 +42,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  &:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s ease;
+  }
 }
 
 .productsInCart {
-  height: 42px;
-  width: 42px;
-  font-size: 22px;
+  height: 32px;
+  width: 32px;
+  font-size: 18px;
   font-weight: 700;
   color: rgb(255, 0, 0);
   border: 2px solid rgb(255, 0, 0);

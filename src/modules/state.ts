@@ -14,7 +14,7 @@ export const arrPromoCods = ['RS', 'EPM']; // доступные для ввод
 export const arrActivPromoCods: string[] = []; // массив введеных промо кодов
 
 export const cartPages = {
-  limitPrductsOnPage: 5, // количество продуктов на странице cart
+  limitPrductsOnPage: 4, // количество продуктов на странице cart
   limitPages: 1, // количество страниц с продуктами cart
   curentPage: 1 // текущая страница cart
 }
@@ -24,3 +24,17 @@ export const updateState = () => state = createState();
 
 // очистка корзины
 export const clearCartState = () => cartState = [];
+
+// query параметры из url
+export let queryInUrl: string;
+export const saveQuery = () => {
+  const hash = window.location.hash; // получает хеш из строки браузера
+  const queryString = hash.split('?')[1]; // отделяет поиск от хеша
+  if (queryString) queryInUrl = queryString;
+}
+export const loadQuery = () => {
+  if (queryInUrl) window.history.pushState({}, "", `#?${queryInUrl}`); // добавляет query в URL
+}
+export const clearQuery = () => {
+  queryInUrl = ''; 
+}

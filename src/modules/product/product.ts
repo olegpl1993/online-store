@@ -9,7 +9,10 @@ import { cart } from '../cart/cart';
 export function product(contentBox: HTMLElement, id: number) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
-  const productItem = products[id - 1];
+  header(headerBox); // обновление хедера
+
+  const productItem = products[id - 1]; // обьект продукта
+  if (!productItem) return createElement(contentBox, 'div', 'product', `Product ${id} not found`); // если введен не коректный номер продукта
 
   // проверка что продукт есть в корзине
   const inCartArr: boolean[] = [];
@@ -17,9 +20,10 @@ export function product(contentBox: HTMLElement, id: number) {
   const inCart = inCartArr.includes(true);
 
   const pathStr = `STORE >> ${productItem.category} >> ${productItem.brand} >> ${productItem.title}`.toUpperCase();
-  const productBox = createElement(contentBox, 'h2', 'product', pathStr);
+  const productBox = createElement(contentBox, 'div', 'product');
+  const productPatch = createElement(productBox, 'div', 'productPatch', pathStr);
 
-  const cardWrap = createElement(contentBox, 'div', 'card-item')
+  const cardWrap = createElement(productBox, 'div', 'card-item')
   cardWrap.innerHTML = `
   <div class="photo">
   <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} loading = "lazy" width="220" height="220">
@@ -59,7 +63,7 @@ export function product(contentBox: HTMLElement, id: number) {
   const addRemoveBtn = document.querySelector('.addRemoveBtn');
   if (inCart) {
     addRemoveBtn?.addEventListener('click', () => {
-      cartState.splice(cartState.indexOf(productItem), 1); // удаляет товар из корзины
+      cartState.splice(cartState.findIndex((product) => productItem.id === product.id), 1); // удаляет товар из корзины
       header(headerBox); // повторная отрисовка хедера
       product(contentBox, id);
     });

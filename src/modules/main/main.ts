@@ -7,11 +7,22 @@ import { parseSearch } from '../functions';
 import { addToUrl } from '../functions';
 import { delFromUrl } from '../functions';
 import { updateState } from './../state';
+import { clearQuery } from './../state';
+import { header } from '../header/header';
+import { headerBox } from '../..';
 
 export function main(contentBox: HTMLElement) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
-  const queryObj = parseSearch(); // получение query параметров
+  clearQuery(); // очищает сохраненые query параметры
+  header(headerBox); // обновляет хедер
+  const queryObj = parseSearch(); // получение query параметров в обьект
+
+  if (queryObj.notCorrectQuery[0]) { // очищает фильтры если введен не коретный query ключ
+    window.history.pushState({}, "", '#'); // очищает url строку
+    main(contentBox); // рендер главной страницы
+  }
+
   updateState(); // обновить фильтрацию и сортировку state
 
   const mainBox = createElement(contentBox, 'div', 'main');
@@ -182,7 +193,7 @@ export function main(contentBox: HTMLElement) {
   })
   if (queryObj.sort.length > 0) (sortCardSelect as HTMLSelectElement).value = queryObj.sort[0]; // делает активным выбранную сортировку
 
-  const foundCard = createElement(sortCardBox, 'div', 'sortCardSelect', `Found: ${state.length}`);
+  const foundCard = createElement(sortCardBox, 'div', 'foundCard', `Found: ${state.length}`);
 
   const searchCard = createElement(sortCardBox, 'input', 'searchCard');
   (searchCard as HTMLInputElement).type = 'search';
@@ -202,7 +213,6 @@ export function main(contentBox: HTMLElement) {
     const sizeBtn = createElement(sizeBtnRow, 'button', 'bigSizeBtn');
     for (let i = 0; i < 9; i++) createElement(sizeBtn, 'div', 'bigSizeBtnPoint');
     sizeBtn.addEventListener('click', () => { // слушатель события при изменение size
-      console.log('big')
       addToUrl('size', 'big'); // добавляет query в URL
       main(contentBox); // отрисовка карточек товара
     })
@@ -210,7 +220,6 @@ export function main(contentBox: HTMLElement) {
     const sizeBtn = createElement(sizeBtnRow, 'button', 'smallSizeBtn');
     for (let i = 0; i < 20; i++) createElement(sizeBtn, 'div', 'smallSizeBtnPoint');
     sizeBtn.addEventListener('click', () => { // слушатель события при изменение size
-      console.log('small')
       addToUrl('size', 'small'); // добавляет query в URL
       main(contentBox); // отрисовка карточек товара
     })
@@ -218,10 +227,8 @@ export function main(contentBox: HTMLElement) {
 
   // блок с карточками ----------------------------------------------------------------------
   const mainProductsCardBox = createElement(mainProductsColum, 'div', 'mainProductsCardBox');
-  for (const product in state) {
-    card(mainProductsCardBox, +product);
-  }
+  if (state.length === 0) createElement(mainProductsCardBox, 'div', 'noProductsFound', 'No products found');
+  else for (const product in state) card(mainProductsCardBox, +product); // рендер карточек товара
 
   return mainBox;
 }
-

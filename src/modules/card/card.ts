@@ -8,6 +8,7 @@ import { headerBox } from '../..';
 import { main } from '../main/main';
 import { contentBox as mainContentBox } from '../..';
 import { parseSearch } from '../functions';
+import { saveQuery } from '../state';
 
 export function card(contentBox: HTMLElement, id: number) {
   const productItem = state[id];
@@ -36,17 +37,20 @@ export function card(contentBox: HTMLElement, id: number) {
     <div>Rating: ${productItem.rating}</div>
     <div>Stock: ${productItem.stock}</div> `;
   } else {
-    const cardDescriptionPrice = createElement(cardWrapper, 'div', 'cardDescriptionPrice', `Price: $${productItem.price}`);
+    const cardDescriptionPrice = createElement(cardWrapper, 'div', 'cardDescription', `Price: $${productItem.price}`);
   }
 
   const buttonRow = createElement(cardWrapper, 'div', 'buttonRow');
   const details = createElement(buttonRow, 'a', 'details', 'DETAILS');
   (details as HTMLAnchorElement).href = `#product/${productItem.id}`;
-  details.addEventListener('click', (event) => route(event));
+  details.addEventListener('click', (event) => {
+    saveQuery(); // сохраняет query параметры
+    route(event);
+  });
   if (inCart) {
     const removeProduct = createElement(buttonRow, 'button', 'addToCart', 'REMOVE');
     removeProduct.addEventListener('click', () => {
-      cartState.splice(cartState.indexOf(productItem), 1); // удаляет товар из корзины
+      cartState.splice(cartState.findIndex((product) => productItem.id === product.id), 1); // удаляет товар из корзины
       header(headerBox); // повторная отрисовка хедера
       main(mainContentBox); // повторная отрисовка main
     });

@@ -12,6 +12,8 @@ import { buyNow } from '../buyNow/buyNow';
 export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
   while (contentBox.firstChild) contentBox.removeChild(contentBox.firstChild); // очищаем узел contentBox
 
+  header(headerBox); // обновление хедера
+
   const cartStateObj = cartState.map((product) => product.id) // { ID товара : количество товара }
     .reduce((acc: Record<number, number>, el: number) => { acc[el] = (acc[el] || 0) + 1; return acc }, {});
 
@@ -70,40 +72,43 @@ export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
   const productsList = createElement(productsBox, 'div', 'productsList');
   let i = 1; // начальная строка товара
   for (const id in cartStateObj) {
+    const productItem = products[+id - 1];
     if (i <= cartPages.limitPrductsOnPage * cartPages.curentPage && i > cartPages.limitPrductsOnPage * (cartPages.curentPage - 1)) {
       const productRow = createElement(productsList, 'div', 'productRow');
 
       const numberRow = createElement(productRow, 'div', 'numberRow', `${i}`);
       const productImgBox = createElement(productRow, 'div', 'productImgBox');
       const productImg = createElement(productImgBox, 'img', 'productImg');
-      (productImg as HTMLImageElement).src = products[+id - 1].thumbnail;
+      (productImg as HTMLImageElement).src = productItem.thumbnail;
 
       const descriptionColum = createElement(productRow, 'div', 'descriptionColum');
-      createElement(descriptionColum, 'div', 'productTitle', `${products[+id - 1].title}`);
-      createElement(descriptionColum, 'div', 'descriptionText', `Category: ${products[+id - 1].category}`);
-      createElement(descriptionColum, 'div', 'descriptionText', `Brand: ${products[+id - 1].brand}`);
-      createElement(descriptionColum, 'div', 'descriptionText', `Discount Percentage: ${products[+id - 1].discountPercentage}`);
-      createElement(descriptionColum, 'div', 'descriptionText', `Rating: ${products[+id - 1].rating}`);
-      createElement(descriptionColum, 'div', 'descriptionText', `${products[+id - 1].description}`);
+      createElement(descriptionColum, 'div', 'productTitle', `${productItem.title}`);
+      createElement(descriptionColum, 'div', 'descriptionText', `Category: ${productItem.category}`);
+      createElement(descriptionColum, 'div', 'descriptionText', `Brand: ${productItem.brand}`);
+      createElement(descriptionColum, 'div', 'descriptionText', `Discount Percentage: ${productItem.discountPercentage}`);
+      createElement(descriptionColum, 'div', 'descriptionText', `Rating: ${productItem.rating}`);
+      createElement(descriptionColum, 'div', 'descriptionText', `${productItem.description}`);
 
       const numberColum = createElement(productRow, 'div', 'numberColum'); // колонка регулировки количества товара
-      const numberProductStock = createElement(numberColum, 'div', 'numberProductStock', `Stock: ${products[+id - 1].stock}`);
+      const numberProductStock = createElement(numberColum, 'div', 'numberProductStock', `Stock: ${productItem.stock}`);
       const numberAddAwayRow = createElement(numberColum, 'div', 'numberAddAwayRow');
 
       const numberAddBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '+');
       numberAddBtn.addEventListener('click', () => {
-        if (cartStateObj[+id] < products[+id - 1].stock) cartState.push(products[+id - 1]);
+        if (cartStateObj[+id] < productItem.stock) cartState.push(productItem);
+        console.log(productItem)
+        console.log(cartState)
         header(headerBox);
         cart(contentBox);
       })
       const numberOfProducts = createElement(numberAddAwayRow, 'div', 'numberOfProducts', `${cartStateObj[+id]}`);
       const numberAwayBtn = createElement(numberAddAwayRow, 'button', 'numberBtn', '-');
       numberAwayBtn.addEventListener('click', () => {
-        cartState.splice(cartState.indexOf(products[+id - 1]), 1);
+        cartState.splice(cartState.findIndex((product) => productItem.id === product.id), 1); // удаляет товар из корзины
         header(headerBox);
         cart(contentBox);
       })
-      const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${products[+id - 1].price * cartStateObj[+id]}`);
+      const numberProductSumm = createElement(numberColum, 'div', 'numberProductSumm', `$${productItem.price * cartStateObj[+id]}`);
     } else {
       if (cartPages.curentPage > cartPages.limitPages) {
         cartPages.curentPage = cartPages.limitPages;
@@ -122,7 +127,7 @@ export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
   const finalTotalSum = totalSum - (totalSum / 100 * 10 * arrActivPromoCods.length); // сумма с учетом промо кодов
 
   if (arrActivPromoCods.length > 0) { // если есть активированные промо коды
-    const summaryNewTotal = createElement(summaryBox, 'div', 'summaryTotal', `New total: $${finalTotalSum}`);
+    const summaryNewTotal = createElement(summaryBox, 'div', 'summaryNewTotal', `New total: $${finalTotalSum}`);
     summaryTotal.style.textDecoration = 'line-through'; // перечеркивает сумму до скидки
     arrActivPromoCods.forEach((code) => {
       const appliedCodes = createElement(summaryBox, 'button', 'appliedCodes', `${code} -10% DROP`);
@@ -161,5 +166,6 @@ export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
     cart(contentBox, true);
   })
   // -----------------------------------------------------------------------------------------
+
   return cart;
 }
