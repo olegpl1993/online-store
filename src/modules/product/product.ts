@@ -20,9 +20,10 @@ export function product(contentBox: HTMLElement, id: number) {
   const inCart = inCartArr.includes(true);
 
   const pathStr = `STORE >> ${productItem.category} >> ${productItem.brand} >> ${productItem.title}`.toUpperCase();
-  const productBox = createElement(contentBox, 'h2', 'product', pathStr);
+  const productBox = createElement(contentBox, 'div', 'product');
+  const productPatch = createElement(productBox, 'div', 'productPatch', pathStr);
 
-  const cardWrap = createElement(contentBox, 'div', 'card-item')
+  const cardWrap = createElement(productBox, 'div', 'card-item')
   cardWrap.innerHTML = `
   <div class="photo">
   <img src="${productItem.thumbnail}" alt="The image of ${productItem.title} loading = "lazy" width="220" height="220">

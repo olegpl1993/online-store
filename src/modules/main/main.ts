@@ -193,7 +193,7 @@ export function main(contentBox: HTMLElement) {
   })
   if (queryObj.sort.length > 0) (sortCardSelect as HTMLSelectElement).value = queryObj.sort[0]; // делает активным выбранную сортировку
 
-  const foundCard = createElement(sortCardBox, 'div', 'sortCardSelect', `Found: ${state.length}`);
+  const foundCard = createElement(sortCardBox, 'div', 'foundCard', `Found: ${state.length}`);
 
   const searchCard = createElement(sortCardBox, 'input', 'searchCard');
   (searchCard as HTMLInputElement).type = 'search';

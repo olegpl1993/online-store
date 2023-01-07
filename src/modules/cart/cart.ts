@@ -127,7 +127,7 @@ export function cart(contentBox: HTMLElement, buyNowDraw?: boolean) {
   const finalTotalSum = totalSum - (totalSum / 100 * 10 * arrActivPromoCods.length); // сумма с учетом промо кодов
 
   if (arrActivPromoCods.length > 0) { // если есть активированные промо коды
-    const summaryNewTotal = createElement(summaryBox, 'div', 'summaryTotal', `New total: $${finalTotalSum}`);
+    const summaryNewTotal = createElement(summaryBox, 'div', 'summaryNewTotal', `New total: $${finalTotalSum}`);
     summaryTotal.style.textDecoration = 'line-through'; // перечеркивает сумму до скидки
     arrActivPromoCods.forEach((code) => {
       const appliedCodes = createElement(summaryBox, 'button', 'appliedCodes', `${code} -10% DROP`);

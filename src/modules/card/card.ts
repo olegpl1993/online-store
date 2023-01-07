@@ -37,7 +37,7 @@ export function card(contentBox: HTMLElement, id: number) {
     <div>Rating: ${productItem.rating}</div>
     <div>Stock: ${productItem.stock}</div> `;
   } else {
-    const cardDescriptionPrice = createElement(cardWrapper, 'div', 'cardDescriptionPrice', `Price: $${productItem.price}`);
+    const cardDescriptionPrice = createElement(cardWrapper, 'div', 'cardDescription', `Price: $${productItem.price}`);
   }
 
   const buttonRow = createElement(cardWrapper, 'div', 'buttonRow');

@@ -1,3 +1,5 @@
+$green: rgb(192, 255, 197);
+
 .main {
   display: flex;
   align-items: flex-start;
@@ -32,11 +34,15 @@
     .openFilters,
     .mainFilterBtnResetFilters,
     .mainFilterBtnCopyLink {
-      border: 1px solid black;
-      border-radius: 5px;
+      border-radius: 2px;
       padding: 5px;
       font-size: 15px;
-      background-color: rgb(171, 255, 171);
+      background-color: $green;
+      color: black;
+      transition: color 0.2s ease;
+      &:hover {
+        color: red;
+      }
     }
     .openFilters {
       display: none;
@@ -50,8 +56,7 @@
   .priceBox,
   .mainFilterBrandBox,
   .mainFilterCategoryBox {
-    border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 2px;
     background-color: white;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     padding: 5px;
@@ -66,6 +71,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: $green;
+      padding: 5px;
     }
 
     .brandList,
@@ -124,8 +131,8 @@
       }
 
       input[type="range"]::-webkit-slider-thumb:active {
-        box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-        -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+        box-shadow: inset 0 0 3px red, 0 0 9px red;
+        -webkit-box-shadow: inset 0 0 3px red, 0 0 9px red;
       }
 
       input[type="range"] {
@@ -159,8 +166,7 @@
   gap: 10px;
 
   .sortCardBox {
-    border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 2px;
     background-color: white;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     padding: 5px;
@@ -173,16 +179,30 @@
     gap: 10px;
 
     .sortCardSelect {
-      font-size: 25px;
+      font-size: 22px;
+      border: 1px solid rgb(200, 200, 200);
+      padding: 2px;
+      text-align: center;
+      &:hover {
+        border: 1px solid red;
+      }
+    }
+
+    .foundCard {
+      font-size: 22px;
+      color: black;
     }
 
     .searchCard {
       border: 1px solid black;
-      font-size: 25px;
+      font-size: 22px;
       padding: 3px;
       text-align: center;
       @media (max-width: 1050px) {
         width: 250px;
+      }
+      &:focus {
+        border: 1px solid red;
       }
     }
 
@@ -193,11 +213,10 @@
 
       .bigSizeBtn,
       .smallSizeBtn {
-        height: 45px;
-        width: 45px;
-        border: 1px solid black;
+        height: 43px;
+        width: 43px;
         background-color: rgb(166, 252, 179);
-        border-radius: 10px;
+        border-radius: 2px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -205,38 +224,43 @@
         padding: 2px;
         gap: 1px;
         cursor: pointer;
-      }
 
-      .smallSizeBtnPoint,
-      .bigSizeBtnPoint {
-        height: 10px;
-        width: 10px;
-        background-color: white;
-        border: 1px solid red;
-        border-radius: 50%;
-      }
-      .smallSizeBtnPoint {
-        height: 6px;
-        width: 6px;
+        .smallSizeBtnPoint,
+        .bigSizeBtnPoint {
+          height: 10px;
+          width: 10px;
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 50%;
+        }
+        &:hover .bigSizeBtnPoint {
+          border: 1px solid red;
+        }
+        .smallSizeBtnPoint {
+          height: 6px;
+          width: 6px;
+        }
+        &:hover .smallSizeBtnPoint {
+          border: 1px solid red;
+        }
       }
     }
   }
+}
 
-  .mainProductsCardBox {
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+.mainProductsCardBox {
+  border-radius: 2px;
+  background-color: white;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
-    .noProductsFound {
-      font-size: 20px;
-    }
+  .noProductsFound {
+    font-size: 20px;
   }
 }
