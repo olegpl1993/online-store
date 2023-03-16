@@ -1,0 +1,63 @@
+.header {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px;
+  gap: 10px;
+  
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 600;
+  color: red;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s ease;
+  }
+}
+
+.total {
+  font-size: 25px;
+  color: black;
+  display: flex;
+  gap: 5px;
+}
+
+.cartImg {
+  height: 80px;
+  width: 110px;
+  background-image: url("../../images/cart.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s ease;
+  }
+}
+
+.productsInCart {
+  height: 32px;
+  width: 32px;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgb(255, 0, 0);
+  border: 2px solid rgb(255, 0, 0);
+  background-color: rgb(192, 255, 197);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

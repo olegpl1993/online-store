@@ -1,0 +1,79 @@
+$green: rgb(192, 255, 197);
+
+.smallCard,
+.card {
+  width: 350px;
+  height: 350px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .cardWrapper {
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .cardTitle {
+    text-align: center;
+    font-size: 25px;
+    width: 100%;
+    color: black;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .cardDescription {
+    font-size: 21px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+  }
+
+  .buttonRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5px;
+  }
+
+  .addToCart,
+  .details {
+    background-color: $green;
+    border-radius: 2px;
+    font-size: 15px;
+    padding: 5px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 2px rgb(129, 129, 129);
+    width: 120px;
+    &:hover {
+      color: red;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px black;
+      transform: translate(2px, 2px);
+    }
+  }
+}
+
+.smallCard {
+  width: 250px;
+  height: 250px;
+}
+
+._inCart {
+  border: 1px solid red;
+  &:hover {
+    box-shadow: 2px 2px 10px rgb(255, 130, 130);
+  }
+}
