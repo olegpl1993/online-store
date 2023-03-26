@@ -4,4 +4,4 @@
 Technical stack:
 - typescript
 - sass(scss)
-- eslint
+- webpack
